@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset=utf-8 />
+<title>Ember Reddit Example</title>
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/emberreddit.css">
+</head>
+<body>
+
+<!--       {{#each subreddit in subreddits}}
+      <li>{{#linkTo 'subreddit' subreddit}}{{subreddit.title}}{{/linkTo}}</li>
+    {{/each}} -->
+  <script type='text/x-handlebars' data-template-name="application">
+    <div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="brand" href="./index.html">Ember.js Instagram demo</a>
+          <div class="nav-collapse collapse">
+            <ul class="nav">
+              <li class="">
+                <a href="./index.html">Home</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="row">
+        <div class="span10 sort-photos">
+          <a href="#" title="recent">recent</a>
+          <a href="#" title="popular">popular</a>
+        </div>
+        <div class="span2 text-right">
+          <a class="grid-icon" {{action disableComments}} title="Recent">
+            <span class="block top-row"></span>
+            <span class="block top-row"></span>
+            <span class="block top-row"></span>
+            <span class="block"></span>
+            <span class="block"></span>
+            <span class="block"></span>
+            <span class="block"></span>
+            <span class="block"></span>
+            <span class="block"></span>
+          </a>
+          <a class="list-icon" {{action enableComments}} title="Popular">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+          </a>
+        </div>
+      </div>
+
+      <div class="row">
+        {{outlet}}
+      </div>
+    </div>
+   </script>
+
+  <script type="text/x-handlebars" data-template-name="subreddit">
+
+
+    {{outlet}}
+
+    {{#if loaded}}
+
+        {{#each link in links}}
+          <div class="span4">
+            <div class="photo">
+              {{#linkTo 'link' link}}
+                <div class="image-container">
+                  <img {{bindAttr src="link.images.low_resolution.url" alt="link.caption.text"}}>
+                </div>
+              {{/linkTo}}
+
+              {{#if showComments}}
+                <div class="caption">
+                  {{#if link.caption.text}}
+                    <p>
+                      <img class="profile" {{bindAttr src="link.user.profile_picture"}} />
+                      {{#linkTo 'link' link}}
+                        {{link.user.username}}
+                      {{/linkTo}}
+                      {{link.caption.text}}
+                      {{timestamp link.caption.created_time}}
+                    </p>
+                  {{/if}}
+                </div>
+
+                <div class="comments">
+                  {{#each comment in link.comments.data}}
+                    <p>
+                    {{#linkTo 'link' link}}
+                      {{comment.from.username}}
+                    {{/linkTo}}
+                    {{comment.text}}</p>
+                  {{/each}}
+                </div>
+
+              {{/if}}
+            </div>
+          </div>
+          
+        {{/each}}
+
+
+    {{else}}
+      Loading...
+    {{/if}}
+  </script>
+<!-- <p><img class="profile" {{bindAttr src="comment.from.profile_picture"}} /> -->
+<!--   
+            {{#if link.thumbnailUrl}}
+              <div class="span1">
+                <img {{bindAttr src="link.thumbnailUrl"}}>
+              </div>
+            {{/if}}
+
+              {{#linkTo 'link' link}}{{link.title}}{{/linkTo}}
+              <span class='domain'>({{link.domain}})</span>
+ -->
+
+  <script type="text/x-handlebars" data-template-name="link">
+    <div class="photo-modal clearfix">
+      <div class="modal-image">
+        <img {{bindAttr src="images.standard_resolution.url" alt="caption.text"}}>
+      </div>
+      <div class="media-info">
+
+        {{#if location.latitude}}
+        <div class="place-map" {{bindAttr style="mapUrl"}}>
+          <b></b>
+        </div>
+        {{/if}}
+
+        <div class="caption">
+          {{#if caption.text}}
+            <p>
+              <img class="profile" {{bindAttr src="user.profile_picture"}} />
+              {{#linkTo 'subreddit' controllers.subreddit.content }}
+                {{user.username}}
+              {{/linkTo}}
+              {{caption.text}}
+              {{timestamp caption.created_time}}
+            </p>
+          {{/if}}
+        </div>
+
+        <div class="comments">
+          {{#each comment in comments.data}}
+            <p>
+            <img class="profile" {{bindAttr src="comment.from.profile_picture"}} />
+            {{#linkTo 'subreddit' controllers.subreddit.content }}
+              {{comment.from.username}}
+            {{/linkTo}}
+            {{comment.text}}</p>
+          {{/each}}
+        </div>
+      </div>
+    </div>
+
+    {{#linkTo 'subreddit' controllers.subreddit.content class="close-modal"}}close{{/linkTo}}
+  </script>
+
+  <script src="js/libs/jquery-1.9.1.js"></script>
+  <script src="js/libs/handlebars-1.0.0-rc.3.js"></script>
+  <script src="js/libs/ember-1.0.0-rc.2.js"></script>
+  <script src="js/libs/bootstrap.min.js"></script>
+  <script src="src/ember.oauth2.js"></script>
+  <script src="js/libs/jquery.imagesloaded.min.js"></script>
+  <script src="js/libs/moment.min.js"></script>
+  <script src="js/app.js"></script>
+
+</body>
+</html>
