@@ -51,6 +51,8 @@
           links.push(EmberInstagram.Link.create(child));
         });
         subreddit.setProperties({links: links, loaded: true});
+        console.log(subreddit);
+        
       });
     }
 
@@ -61,10 +63,12 @@
     store: {},
 
     find: function(id) {
-      if (!this.store[id]) {
-        this.store[id] = EmberInstagram.Subreddit.create({id: id});
-      }
-      return this.store[id];
+      console.log(id);
+      
+      // if (!this.store[id]) {
+        this.store = EmberInstagram.Subreddit.create();
+      // }
+      return this.store;
     }
   });
 
@@ -176,7 +180,7 @@
 
   // Routes below
   EmberInstagram.Router.map(function() {
-    this.resource("subreddit", { path: "/r/:subreddit_id" }, function() {
+    this.resource("subreddit", { path: "/" }, function() {
       this.resource('link', { path: '/:link_id'} );
     });
   });
@@ -200,15 +204,16 @@
   });
 
   EmberInstagram.SubredditRoute = Ember.Route.extend({
-    serialize: function(model) {
-      return {subreddit_id: model.get('id')};
-    },
+    // serialize: function(model) {
+    //   return {subreddit_id: model.get('id')};
+    // },
 
     model: function(params) {
-      return EmberInstagram.Subreddit.find(params.subreddit_id);
+      return EmberInstagram.Subreddit.find();
     },
 
     setupController: function(controller, model) {
+
       model.loadLinks();
     },
   });
@@ -226,14 +231,16 @@
 
   EmberInstagram.IndexRoute = Ember.Route.extend({
     redirect: function() {
-      this.transitionTo('subreddit', EmberInstagram.Subreddit.find(defaultSubreddits[0]));
+      this.transitionTo('subreddit');
     }
   });
 
-  Handlebars.registerHelper('timestamp', function(context, options) {
+  Ember.Handlebars.registerBoundHelper('timestamp', function(context, options) {
     var formatter        = options.hash['format'] ? options.hash['format'] : 'hh:mm a MM-DD-YYYY';
-    var original_date    = Ember.get(this, context); // same as this.get(context) ?
-    var parsed_date      = moment(original_date).startOf('hour').fromNow();
+
+    var original_date    = Ember.get(this, context); // same as ?
+
+    var parsed_date      = moment.unix(context).startOf('hour').fromNow();
     // var formatted_date   = parsed_date.format(formatter);
 
     return new Handlebars.SafeString("<time datetime=" + original_date +">" + parsed_date + "</time>");

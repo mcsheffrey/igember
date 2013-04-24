@@ -90,7 +90,7 @@
                         {{link.user.username}}
                       {{/linkTo}}
                       {{link.caption.text}}
-                      {{timestamp link.caption.created_time}}
+                      {{timestamp link.created_time }}
                     </p>
                   {{/if}}
                 </div>
@@ -116,17 +116,6 @@
       Loading...
     {{/if}}
   </script>
-<!-- <p><img class="profile" {{bindAttr src="comment.from.profile_picture"}} /> -->
-<!--   
-            {{#if link.thumbnailUrl}}
-              <div class="span1">
-                <img {{bindAttr src="link.thumbnailUrl"}}>
-              </div>
-            {{/if}}
-
-              {{#linkTo 'link' link}}{{link.title}}{{/linkTo}}
-              <span class='domain'>({{link.domain}})</span>
- -->
 
   <script type="text/x-handlebars" data-template-name="link">
     <div class="photo-modal clearfix">
@@ -149,7 +138,7 @@
                 {{user.username}}
               {{/linkTo}}
               {{caption.text}}
-              {{timestamp caption.created_time}}
+              {{timestamp created_time}}
             </p>
           {{/if}}
         </div>
