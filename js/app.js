@@ -48,7 +48,7 @@
         response.data.forEach(function (child) {
           console.log(child);
 
-          links.push(EmberInstagram.Link.create(child));
+          links.push(EmberInstagram.SubredditLink.create(child));
         });
         subreddit.setProperties({links: links, loaded: true});
         console.log(subreddit);
@@ -73,7 +73,7 @@
   });
 
   // Our Link model
-  EmberInstagram.Link = Ember.Object.extend({
+  EmberInstagram.SubredditLink = Ember.Object.extend({
 
     // Computed properties, just the Google Maps API Url for now, I'm guess there will be more here eventually
     mapUrl: function() {
@@ -104,12 +104,12 @@
 
   });
 
-  EmberInstagram.Link.reopenClass({
+  EmberInstagram.SubredditLink.reopenClass({
     store: {},
 
     find: function(id) {
       if (!this.store[id]) {
-        this.store[id] = EmberInstagram.Link.create({id: id});
+        this.store[id] = EmberInstagram.SubredditLink.create({id: id});
       }
       return this.store[id];
     }
@@ -158,7 +158,7 @@
     }
   });
 
-  EmberInstagram.LinkView = Ember.View.extend({
+  EmberInstagram.SubredditLinkView = Ember.View.extend({
     classNames: ['link-view'],
     isEnabled: false,
     classNameBindings: ['isEnabled:enabled:disabled'],
@@ -180,22 +180,24 @@
 
   // Routes below
   EmberInstagram.Router.map(function() {
-    this.resource("subreddit", { path: "/" }, function() {
-      this.resource('link', { path: '/:link_id'} );
+    this.resource("subreddit", { path: "/subreddit" }, function() {
+      this.route('link', { path: '/:link_id'} );
     });
   });
 
-  EmberInstagram.LinkController = Ember.ObjectController.extend({
+  EmberInstagram.SubredditLinkController = Ember.ObjectController.extend({
     needs: ['subreddit']
   });
 
-  EmberInstagram.LinkRoute = Ember.Route.extend({
+  EmberInstagram.SubredditLinkRoute = Ember.Route.extend({
     serialize: function(model) {
       return {link_id: model.get('id')};
     },
 
     model: function(params) {
-      return EmberInstagram.Link.find(params.link_id);
+      console.log(params);
+      
+      return EmberInstagram.SubredditLink.find(params.link_id);
     },
 
     setupController: function(controller, model) {
@@ -209,13 +211,13 @@
     // },
 
     model: function(params) {
-      return EmberInstagram.Subreddit.find();
+      return EmberInstagram.Subreddit.loadLinks();
     },
 
-    setupController: function(controller, model) {
+    // setupController: function(controller, model) {
 
-      model.loadLinks();
-    },
+    //   model.loadLinks();
+    // },
   });
 
   EmberInstagram.ApplicationRoute = Ember.Route.extend({

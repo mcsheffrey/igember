@@ -75,7 +75,7 @@
         {{#each link in links}}
           <div class="span4">
             <div class="photo">
-              {{#linkTo 'link' link}}
+              {{#linkTo "subreddit.link" link}}
                 <div class="image-container">
                   <img {{bindAttr src="link.images.low_resolution.url" alt="link.caption.text"}}>
                 </div>
@@ -86,7 +86,7 @@
                   {{#if link.caption.text}}
                     <p>
                       <img class="profile" {{bindAttr src="link.user.profile_picture"}} />
-                      {{#linkTo 'link' link}}
+                      {{#linkTo "subreddit.link" link}}
                         {{link.user.username}}
                       {{/linkTo}}
                       {{link.caption.text}}
@@ -98,7 +98,7 @@
                 <div class="comments">
                   {{#each comment in link.comments.data}}
                     <p>
-                    {{#linkTo 'link' link}}
+                    {{#linkTo "subreddit.link" link}}
                       {{comment.from.username}}
                     {{/linkTo}}
                     {{comment.text}}</p>
@@ -117,7 +117,7 @@
     {{/if}}
   </script>
 
-  <script type="text/x-handlebars" data-template-name="link">
+  <script type="text/x-handlebars" data-template-name="subreddit/link">
     <div class="photo-modal clearfix">
       <div class="modal-image">
         <img {{bindAttr src="images.standard_resolution.url" alt="caption.text"}}>
