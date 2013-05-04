@@ -34,6 +34,8 @@
     loaded: false,
     showComments: true,
     title: function() {
+      console.log(this.get('id'));
+      
       return "/r/" + this.get('id');
     }.property('id'),
 
@@ -62,13 +64,10 @@
   EmberInstagram.Subreddit.reopenClass({
     store: {},
 
-    find: function(id) {
-      console.log(id);
+    find: function() {
+
       
-      // if (!this.store[id]) {
-        this.store = EmberInstagram.Subreddit.create();
-      // }
-      return this.store;
+     return EmberInstagram.Subreddit.create();
     }
   });
 
@@ -211,25 +210,18 @@
     // },
 
     model: function(params) {
-      return EmberInstagram.Subreddit.loadLinks();
+      console.log(params);
+      
+      return EmberInstagram.Subreddit.find();
     },
 
-    // setupController: function(controller, model) {
+    setupController: function(controller, model) {
 
-    //   model.loadLinks();
-    // },
+      model.loadLinks();
+    },
   });
 
-  EmberInstagram.ApplicationRoute = Ember.Route.extend({
-    setupController: function(c) {
-      var subreddits = Em.A();
-      defaultSubreddits.forEach(function (id) {
-        subreddits.push(EmberInstagram.Subreddit.find(id));
-      });
-      c.set('subreddits', subreddits)
-    }
-
-  });
+  EmberInstagram.ApplicationRoute = Ember.Route.extend();
 
   EmberInstagram.IndexRoute = Ember.Route.extend({
     redirect: function() {

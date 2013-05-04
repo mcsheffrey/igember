@@ -86,7 +86,7 @@
                   {{#if link.caption.text}}
                     <p>
                       <img class="profile" {{bindAttr src="link.user.profile_picture"}} />
-                      {{#linkTo "subreddit.link" link}}
+                      {{#linkTo subreddit.link EmberInstagram.Subreddit}}
                         {{link.user.username}}
                       {{/linkTo}}
                       {{link.caption.text}}
@@ -98,7 +98,7 @@
                 <div class="comments">
                   {{#each comment in link.comments.data}}
                     <p>
-                    {{#linkTo "subreddit.link" link}}
+                    {{#linkTo subreddit.link EmberInstagram.Subreddit}}
                       {{comment.from.username}}
                     {{/linkTo}}
                     {{comment.text}}</p>
