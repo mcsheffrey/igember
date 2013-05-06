@@ -21,10 +21,11 @@
             <span class="icon-bar"></span>
           </button>
           <a class="brand" href="./index.html">Ember.js Instagram demo</a>
+
           <div class="nav-collapse collapse">
             <ul class="nav">
               <li class="">
-                <a href="./index.html">Home</a>
+                <a href="./index.html">{{title}}</a>
               </li>
             </ul>
           </div>
@@ -82,18 +83,18 @@
               {{/linkTo}}
 
               {{#if showComments}}
-                <div class="caption">
                   {{#if link.caption.text}}
-                    <p>
-                      <img class="profile" {{bindAttr src="link.user.profile_picture"}} />
-                      {{#linkTo 'link' link}}
-                        {{link.user.username}}
-                      {{/linkTo}}
-                      {{link.caption.text}}
-                      {{timestamp link.caption.created_time}}
-                    </p>
+                   <div class="caption">
+                      <p>
+                        <img class="profile" {{bindAttr src="link.user.profile_picture"}} />
+                        {{#linkTo 'link' link}}
+                          {{link.user.username}}
+                        {{/linkTo}}
+                        {{link.caption.text}}
+                        {{timestamp link.caption.created_time}}
+                      </p>
+                    </div>
                   {{/if}}
-                </div>
 
                 <div class="comments">
                   {{#each comment in link.comments.data}}
@@ -129,6 +130,7 @@
  -->
 
   <script type="text/x-handlebars" data-template-name="link">
+  {{log content}}
     <div class="photo-modal clearfix">
       <div class="modal-image">
         <img {{bindAttr src="images.standard_resolution.url" alt="caption.text"}}>
@@ -141,34 +143,50 @@
         </div>
         {{/if}}
 
+        {{#if caption.text}}
         <div class="caption">
-          {{#if caption.text}}
+          
             <p>
               <img class="profile" {{bindAttr src="user.profile_picture"}} />
               {{#linkTo 'subreddit' controllers.subreddit.content }}
                 {{user.username}}
               {{/linkTo}}
               {{caption.text}}
-              {{timestamp caption.created_time}}
+              {{timestamp created_time}}
             </p>
-          {{/if}}
+          
         </div>
+        {{/if}}
 
         <div class="comments">
           {{#each comment in comments.data}}
             <p>
-            <img class="profile" {{bindAttr src="comment.from.profile_picture"}} />
+            
             {{#linkTo 'subreddit' controllers.subreddit.content }}
               {{comment.from.username}}
             {{/linkTo}}
             {{comment.text}}</p>
           {{/each}}
         </div>
+        <div class="photo-controls">
+          {{view Ember.TextArea valueBinding='comment' class="comment" name="comment" placeholder="leave a comment"}}
+          <button {{action like}} class="btn-like ir">Like</button>
+        </div>
       </div>
     </div>
+      <div {{action previousPost}} class="prev-photo nav-modal">
+        <div class="arrow-left arrow"></div>
+        <img {{bindAttr src="images.thumbnail.url" alt="caption.text"}}>
+      </div>
+
+      <div {{action nextPost}} class="next-photo nav-modal">
+        <img {{bindAttr src="images.thumbnail.url" alt="caption.text"}}>
+        <div class="arrow-right arrow"></div>
+      </div>
 
     {{#linkTo 'subreddit' controllers.subreddit.content class="close-modal"}}close{{/linkTo}}
   </script>
+  <!-- <img class="profile" {{bindAttr src="comment.from.profile_picture"}} /> -->
 
   <script src="js/libs/jquery-1.9.1.js"></script>
   <script src="js/libs/handlebars-1.0.0-rc.3.js"></script>
