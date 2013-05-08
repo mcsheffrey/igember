@@ -191,6 +191,16 @@
     previousPost: function() {
       this.advancePost(-1);
     },
+    nextPostThumb: function() {
+      var index = this.get('content.mediaIndex') + 1;
+
+      return EmberInstagram.Subreddit.find('popular').get('links').objectAt(index).get('images.thumbnail.url');
+    }.property('nextPostThumb'),
+    previousPostThumb: function() {
+      var index = this.get('content.mediaIndex') -1;
+
+      return EmberInstagram.Subreddit.find('popular').get('links').objectAt(index).get('images.thumbnail.url');
+    }.property('previousPostThumb'),
     advancePost: function(delta) {
       console.log(this.get('controllers.subreddit'));
       console.log(this.get('content.mediaIndex'));
@@ -202,7 +212,6 @@
       if (index >= 0 && index <= posts.get('length')-1) {
         this.transitionToRoute('link', EmberInstagram.Subreddit.find('popular').get('links').objectAt(index));
       }      
-
     }
   });
 
