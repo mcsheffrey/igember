@@ -173,16 +173,19 @@
           <button {{action like}} class="btn-like ir">Like</button>
         </div>
       </div>
+    {{#if previousMediaThumb}}
     </div>
       <div {{action previousPost}} class="prev-photo nav-modal">
         <div class="arrow-left arrow"></div>
-        <img {{bindAttr src="images.thumbnail.url" alt="caption.text"}}>
+        <img {{bindAttr src="previousMediaThumb" alt="caption.text"}}>
       </div>
-
+    {{/if}}
+    {{#if nextMediaThumb}}
       <div {{action nextPost}} class="next-photo nav-modal">
-        <img {{bindAttr src="nextPostThumb" alt="caption.text"}}>
+        <img {{bindAttr src="nextMediaThumb" alt="caption.text"}}>
         <div class="arrow-right arrow"></div>
       </div>
+    {{/if}}
 
     {{#linkTo 'subreddit' controllers.subreddit.content class="close-modal"}}close{{/linkTo}}
   </script>
