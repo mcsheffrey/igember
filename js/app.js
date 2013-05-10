@@ -178,7 +178,18 @@
         // console.log(self.isEnabled);
 
       });
-    }
+
+      $("body").keydown(function(e) {
+        if(e.keyCode == 37) { // left
+          console.log('left');
+          this.get('LinkController').previousPost();
+        }
+        else if(e.keyCode == 39) { // right
+          console.log('right');
+          
+        }
+      });
+    },
 
   });
 
