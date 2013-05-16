@@ -1,6 +1,7 @@
 // Create our Application
 (function () {
 
+  // OAuth setup
   // Ember.OAuth2.config = {
   //   google: {
   //     clientId: "78e0cc2b8e2440c385969867dc38b7c6",
@@ -12,8 +13,8 @@
 
   Ember.LOG_BINDINGS = true;
 
-  // Default subreddits to include
-  var defaultSubreddits = [
+  // Array of different instagram feeds to filter by
+  var photoFeeds = [
     'popular'
   ];
 
@@ -21,7 +22,7 @@
     LOG_TRANSITIONS: true
   });
 
-  EmberInstagram.Subreddit = Ember.Object.extend({
+  EmberInstagram.Media = Ember.Object.extend({
     loaded: false,
     showComments: true,
     clientID: '5ee7e77d7b0b441f9cd307a5f30c92bb',
@@ -32,12 +33,13 @@
     loadLinks: function() {
       if (this.get('loaded')) return;
 
-      var subreddit = this;
+      var media = this;
       $.getJSON(this.get('url')).then(function(response) {
         var links = Em.A(),
             linkIndex = 0;
         // console.log(response);
 
+        // Mapping next and previous thumbnails/urls to Ember object (this is probably the wrong way to do this :/ )
         response.data.forEach(function (child) {
           console.log(child);
           child.mediaIndex = linkIndex;
@@ -52,19 +54,19 @@
 
           linkIndex++;
         });
-        subreddit.setProperties({links: links, loaded: true});
+        media.setProperties({links: links, loaded: true});
       });
     }
 
 
   });
 
-  EmberInstagram.Subreddit.reopenClass({
+  EmberInstagram.Media.reopenClass({
     store: {},
 
     find: function(id) {
       if (!this.store[id]) {
-        this.store[id] = EmberInstagram.Subreddit.create({id: id});
+        this.store[id] = EmberInstagram.Media.create({id: id});
       }
       return this.store[id];
     }
@@ -94,12 +96,12 @@
       // if (this.get('id')) return;
 
       // We want to grab the single image endpoint here (requires Auth)
-      // var subreddit = this;
+      // var media = this;
       // var url = 'https://api.instagram.com/v1/media/popular?client_id=5ee7e77d7b0b441f9cd307a5f30c92bb&callback=?';
       // $.getJSON(url).then(function (response) {
       //   // console.log(response.data[0]);
         
-      //   subreddit.setProperties(response.data[0]);
+      //   media.setProperties(response.data[0]);
       // });
     }
 
@@ -120,22 +122,22 @@
 
   EmberInstagram.ApplicationController = Ember.Controller.extend({
     title: function() {
-      return this.get('controllers.subreddit.id');
+      return this.get('controllers.media.id');
     }.property('id'),
-    needs: ['subreddit'],
+    needs: ['media'],
     disableComments: function() {
-      this.get('controllers.subreddit').setProperties({showComments: false});
+      this.get('controllers.media').setProperties({showComments: false});
     },
     enableComments: function() {
-      this.get('controllers.subreddit').setProperties({showComments: true});
+      this.get('controllers.media').setProperties({showComments: true});
     }
   });
 
-  EmberInstagram.SubredditController = Ember.ObjectController.extend();
+  EmberInstagram.MediaController = Ember.ObjectController.extend();
 
   // Views
 
-  EmberInstagram.SubredditView = Ember.View.extend({
+  EmberInstagram.MediaView = Ember.View.extend({
     click: function(event) {
 
       // Transition zoom image on click
@@ -195,13 +197,13 @@
 
   // Routes below
   EmberInstagram.Router.map(function() {
-    this.resource("subreddit", { path: "/:subreddit_id" }, function() {
+    this.resource("media", { path: "/:media_id" }, function() {
       this.resource('link', { path: '/:link_id'} );
     });
   });
 
   EmberInstagram.LinkController = Ember.ObjectController.extend({
-    needs: ['subreddit'],
+    needs: ['media'],
     nextPost: function() {
       this.advancePost(1);
     },
@@ -209,7 +211,7 @@
       this.advancePost(-1);
     },
     advancePost: function(delta) {
-      var posts = EmberInstagram.Subreddit.find('popular').get('links'),
+      var posts = EmberInstagram.Media.find('popular').get('links'),
           index = this.get('content.mediaIndex') + delta;
 
       if (index >= 0 && index <= posts.get('length')-1) {
@@ -221,12 +223,12 @@
       
     //   var index = this.get('content.mediaIndex') + 1;
 
-    //   return EmberInstagram.Subreddit.find('popular').get('links').objectAt(index).get('images.thumbnail.url');
+    //   return EmberInstagram.Media.find('popular').get('links').objectAt(index).get('images.thumbnail.url');
     // }.property('nextPostThumb'),
     // previousPostThumb: function() {
     //   var index = this.get('content.mediaIndex') -1;
 
-    //   return EmberInstagram.Subreddit.find('popular').get('links').objectAt(index).get('images.thumbnail.url');
+    //   return EmberInstagram.Media.find('popular').get('links').objectAt(index).get('images.thumbnail.url');
     // }.property('previousPostThumb')
   });
 
@@ -244,15 +246,15 @@
     },
   });
 
-  EmberInstagram.SubredditRoute = Ember.Route.extend({
+  EmberInstagram.MediaRoute = Ember.Route.extend({
     serialize: function(model) {
-      return {subreddit_id: model.get('id')};
+      return {media_id: model.get('id')};
     },
 
     model: function(params) {
-      console.log(EmberInstagram.Subreddit.find(params.subreddit_id));
+      console.log(EmberInstagram.Media.find(params.media_id));
       
-      return EmberInstagram.Subreddit.find(params.subreddit_id);
+      return EmberInstagram.Media.find(params.media_id);
     },
 
     setupController: function(controller, model) {
@@ -262,18 +264,18 @@
 
   EmberInstagram.ApplicationRoute = Ember.Route.extend({
     setupController: function(c) {
-      var subreddits = Em.A();
-      defaultSubreddits.forEach(function (id) {
-        subreddits.push(EmberInstagram.Subreddit.find(id));
+      var medias = Em.A();
+      photoFeeds.forEach(function (id) {
+        medias.push(EmberInstagram.Media.find(id));
       });
-      c.set('subreddits', subreddits)
+      c.set('medias', medias)
     }
 
   });
 
   EmberInstagram.IndexRoute = Ember.Route.extend({
     redirect: function() {
-      this.transitionTo('subreddit', EmberInstagram.Subreddit.find(defaultSubreddits[0]));
+      this.transitionTo('media', EmberInstagram.Media.find(photoFeeds[0]));
     }
   });
 

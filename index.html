@@ -4,12 +4,12 @@
 <meta charset=utf-8 />
 <title>Ember Reddit Example</title>
   <link rel="stylesheet" href="css/bootstrap.min.css">
-  <link rel="stylesheet" href="css/emberreddit.css">
+  <link rel="stylesheet" href="css/emberinstagram.css">
 </head>
 <body>
 
-<!--       {{#each subreddit in subreddits}}
-      <li>{{#linkTo 'subreddit' subreddit}}{{subreddit.title}}{{/linkTo}}</li>
+<!--       {{#each media in medias}}
+      <li>{{#linkTo 'media' media}}{{media.title}}{{/linkTo}}</li>
     {{/each}} -->
   <script type='text/x-handlebars' data-template-name="application">
     <div class="navbar navbar-fixed-top">
@@ -66,7 +66,7 @@
     </div>
    </script>
 
-  <script type="text/x-handlebars" data-template-name="subreddit">
+  <script type="text/x-handlebars" data-template-name="media">
 
 
     {{outlet}}
@@ -148,7 +148,7 @@
           
             <p>
               <img class="profile" {{bindAttr src="user.profile_picture"}} />
-              {{#linkTo 'subreddit' controllers.subreddit.content }}
+              {{#linkTo 'media' controllers.media.content }}
                 {{user.username}}
               {{/linkTo}}
               {{caption.text}}
@@ -162,7 +162,7 @@
           {{#each comment in comments.data}}
             <p>
             
-            {{#linkTo 'subreddit' controllers.subreddit.content }}
+            {{#linkTo 'media' controllers.media.content }}
               {{comment.from.username}}
             {{/linkTo}}
             {{comment.text}}</p>
@@ -187,7 +187,7 @@
       </div>
     {{/if}}
 
-    {{#linkTo 'subreddit' controllers.subreddit.content class="close-modal"}}close{{/linkTo}}
+    {{#linkTo 'media' controllers.media.content class="close-modal"}}close{{/linkTo}}
   </script>
   <!-- <img class="profile" {{bindAttr src="comment.from.profile_picture"}} /> -->
 
