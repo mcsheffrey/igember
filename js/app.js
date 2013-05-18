@@ -181,17 +181,21 @@
 
       });
 
-      $("body").keydown(function(e) {
-        if(e.keyCode == 37) { // left
-          console.log('left');
-          this.get('LinkController').previousPost();
-        }
-        else if(e.keyCode == 39) { // right
-          console.log('right');
+      $('body').on('keydown', function(event) {
+        if(event.keyCode == 37) { // left
           
+          self.get('controller').previousPost();
+        }
+        else if(event.keyCode == 39) { // right
+          self.get('controller').nextPost();
         }
       });
+
     },
+    willDestroyElement: function() {
+      console.log('DESTROYED');
+      $('body').off('keydown');
+    }
 
   });
 
