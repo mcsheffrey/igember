@@ -84,7 +84,11 @@
        * call on redirect from OAuth2 provider response
        */
       onRedirect: function(hash, callback) {
+        console.log('hash', hash);
+        
         var params = this.parseCallback(hash);
+        console.log('params', params);
+        
         if (this.authSuccess(params)) {
           stateObj = this.getState(params.state);
           this.checkState(stateObj);
@@ -118,9 +122,24 @@
       parseCallback: function(locationHash) {
         var oauthParams = {}, queryString = locationHash.substring(1),
         regex = /([^#?&=]+)=([^&]*)/g, m;
-        while (m = regex.exec(queryString)) {
-          oauthParams[decodeURIComponent(m[1])] = decodeURIComponent(m[2]);
+
+        var splitString = queryString.split('#');
+
+        for (var i = 0; i < splitString.length; i++) {
+          callbackParams = splitString[i].split('=');
+          console.log(callbackParams[0]);
+          console.log(callbackParams[1]);
+          
+          oauthParams[callbackParams[0]] = callbackParams[1];
         }
+
+        console.log(oauthParams);
+        
+        console.log('queryString', queryString);
+
+        // while (m = regex.exec(queryString)) {
+        //   oauthParams[decodeURIComponent(m[1])] = decodeURIComponent(m[2]);
+        // }
         return oauthParams;
       },
 

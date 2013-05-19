@@ -2,14 +2,14 @@
 (function () {
 
   // OAuth setup
-  // Ember.OAuth2.config = {
-  //   google: {
-  //     clientId: "78e0cc2b8e2440c385969867dc38b7c6",
-  //     authBaseUri: 'http://localhost:8000',
-  //     redirectUri: 'http://localhost:8000',
-  //     scope: 'likes+comments'
-  //   } 
-  // }
+  Ember.OAuth2.config = {
+    instagram: {
+      clientId: "78e0cc2b8e2440c385969867dc38b7c6",
+      authBaseUri: 'https://instagram.com/oauth/authorize/',
+      redirectUri: 'http://localhost:8000/callback.html',
+      scope: 'basic comments relationships likes'
+    } 
+  }
 
   Ember.LOG_BINDINGS = true;
 
@@ -22,12 +22,17 @@
     LOG_TRANSITIONS: true
   });
 
+  Ember.OAuth2.reopen({ onSuccess: function() { return 'hello, onSuccess' } });
+  Ember.OAuth2.reopen({ onError: function() { return 'hello, onError' } });
+
   EmberInstagram.Media = Ember.Object.extend({
     loaded: false,
     showComments: true,
     clientID: '5ee7e77d7b0b441f9cd307a5f30c92bb',
+    authToken: JSON.parse(localStorage.getItem('token-instagram')).access_token,
     url: function() {
-      return 'https://api.instagram.com/v1/media/'+ this.get('id') + '?client_id=' + this.clientID + '&callback=?';
+
+      return 'https://api.instagram.com/v1/users/self/feed?access_token=' + this.authToken + '&callback=?';
     }.property('url'),
 
     loadLinks: function() {
@@ -130,6 +135,10 @@
     },
     enableComments: function() {
       this.get('controllers.media').setProperties({showComments: true});
+    },
+    authorizeInstagram: function() {
+      EmberInstagram.oauth = Ember.OAuth2.create({providerId: 'instagram'});
+      EmberInstagram.oauth.authorize();
     }
   });
 

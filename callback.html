@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Authorize</title> 
+    <script>
+      var hash = window.location.href,
+          daRealHash = hash.replace(window.location.origin + window.location.pathname, '');
+          
+      window.opener.EmberInstagram.oauth.onRedirect(daRealHash);
+      window.close();
+    </script>
+  </head>
+</html>
