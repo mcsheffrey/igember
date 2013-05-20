@@ -4,12 +4,12 @@
 <meta charset=utf-8 />
 <title>Ember Reddit Example</title>
   <link rel="stylesheet" href="css/bootstrap.min.css">
-  <link rel="stylesheet" href="css/emberreddit.css">
+  <link rel="stylesheet" href="css/emberinstagram.css">
 </head>
 <body>
 
-<!--       {{#each subreddit in subreddits}}
-      <li>{{#linkTo 'subreddit' subreddit}}{{subreddit.title}}{{/linkTo}}</li>
+<!--       {{#each media in medias}}
+      <li>{{#linkTo 'media' media}}{{media.title}}{{/linkTo}}</li>
     {{/each}} -->
   <script type='text/x-handlebars' data-template-name="application">
     <div class="navbar navbar-fixed-top">
@@ -21,13 +21,16 @@
             <span class="icon-bar"></span>
           </button>
           <a class="brand" href="./index.html">Ember.js Instagram demo</a>
+
           <div class="nav-collapse collapse">
             <ul class="nav">
               <li class="">
-                <a href="./index.html">Home</a>
+                <a href="./index.html">{{title}}</a>
               </li>
             </ul>
           </div>
+
+          <a {{action authorizeInstagram}} title="Login">Login</a>
         </div>
       </div>
     </div>
@@ -65,7 +68,7 @@
     </div>
    </script>
 
-  <script type="text/x-handlebars" data-template-name="subreddit">
+  <script type="text/x-handlebars" data-template-name="media">
 
 
     {{outlet}}
@@ -82,20 +85,25 @@
               {{/linkTo}}
 
               {{#if showComments}}
-                <div class="caption">
-                  {{#if link.caption.text}}
-                    <p>
-                      <img class="profile" {{bindAttr src="link.user.profile_picture"}} />
-                      {{#linkTo subreddit.link EmberInstagram.Subreddit}}
-                        {{link.user.username}}
-                      {{/linkTo}}
-                      {{link.caption.text}}
-                      {{timestamp link.created_time }}
-                    </p>
-                  {{/if}}
+               <div class="caption">
+                  <p>
+                    <img class="profile" {{bindAttr src="link.user.profile_picture"}} />
+                    {{#linkTo 'link' link}}
+                      {{link.user.username}}
+                    {{/linkTo}}
+                    {{timestamp link.created_time}}
+                  </p>
                 </div>
 
                 <div class="comments">
+                  {{#if link.caption.text}}
+                    <p>
+                      {{#linkTo 'link' link}}
+                        {{link.user.username}}
+                      {{/linkTo}}
+                      {{link.caption.text}}
+                    </p>
+                  {{/if}}
                   {{#each comment in link.comments.data}}
                     <p>
                     {{#linkTo subreddit.link EmberInstagram.Subreddit}}
@@ -116,8 +124,20 @@
       Loading...
     {{/if}}
   </script>
+<!-- <p><img class="profile" {{bindAttr src="comment.from.profile_picture"}} /> -->
+<!--   
+            {{#if link.thumbnailUrl}}
+              <div class="span1">
+                <img {{bindAttr src="link.thumbnailUrl"}}>
+              </div>
+            {{/if}}
 
-  <script type="text/x-handlebars" data-template-name="subreddit/link">
+              {{#linkTo 'link' link}}{{link.title}}{{/linkTo}}
+              <span class='domain'>({{link.domain}})</span>
+ -->
+
+  <script type="text/x-handlebars" data-template-name="link">
+  {{log content}}
     <div class="photo-modal clearfix">
       <div class="modal-image">
         <img {{bindAttr src="images.standard_resolution.url" alt="caption.text"}}>
@@ -130,34 +150,53 @@
         </div>
         {{/if}}
 
+        {{#if caption.text}}
         <div class="caption">
-          {{#if caption.text}}
+          
             <p>
               <img class="profile" {{bindAttr src="user.profile_picture"}} />
-              {{#linkTo 'subreddit' controllers.subreddit.content }}
+              {{#linkTo 'media' controllers.media.content }}
                 {{user.username}}
               {{/linkTo}}
               {{caption.text}}
               {{timestamp created_time}}
             </p>
-          {{/if}}
+          
         </div>
+        {{/if}}
 
         <div class="comments">
           {{#each comment in comments.data}}
             <p>
-            <img class="profile" {{bindAttr src="comment.from.profile_picture"}} />
-            {{#linkTo 'subreddit' controllers.subreddit.content }}
+            
+            {{#linkTo 'media' controllers.media.content }}
               {{comment.from.username}}
             {{/linkTo}}
             {{comment.text}}</p>
           {{/each}}
         </div>
+        <div class="photo-controls">
+          {{view Ember.TextArea valueBinding='comment' class="comment" name="comment" placeholder="leave a comment"}}
+          <button {{action like}} class="btn-like ir">Like</button>
+        </div>
       </div>
+    {{#if previousMediaThumb}}
     </div>
+      <div {{action previousPost}} class="prev-photo nav-modal">
+        <div class="arrow-left arrow"></div>
+        <img {{bindAttr src="previousMediaThumb" alt="caption.text"}}>
+      </div>
+    {{/if}}
+    {{#if nextMediaThumb}}
+      <div {{action nextPost}} class="next-photo nav-modal">
+        <img {{bindAttr src="nextMediaThumb" alt="caption.text"}}>
+        <div class="arrow-right arrow"></div>
+      </div>
+    {{/if}}
 
-    {{#linkTo 'subreddit' controllers.subreddit.content class="close-modal"}}close{{/linkTo}}
+    {{#linkTo 'media' controllers.media.content class="close-modal"}}close{{/linkTo}}
   </script>
+  <!-- <img class="profile" {{bindAttr src="comment.from.profile_picture"}} /> -->
 
   <script src="js/libs/jquery-1.9.1.js"></script>
   <script src="js/libs/handlebars-1.0.0-rc.3.js"></script>
