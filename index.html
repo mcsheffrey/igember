@@ -85,20 +85,25 @@
               {{/linkTo}}
 
               {{#if showComments}}
-                  {{#if link.caption.text}}
-                   <div class="caption">
-                      <p>
-                        <img class="profile" {{bindAttr src="link.user.profile_picture"}} />
-                        {{#linkTo 'link' link}}
-                          {{link.user.username}}
-                        {{/linkTo}}
-                        {{link.caption.text}}
-                        {{timestamp link.caption.created_time}}
-                      </p>
-                    </div>
-                  {{/if}}
+               <div class="caption">
+                  <p>
+                    <img class="profile" {{bindAttr src="link.user.profile_picture"}} />
+                    {{#linkTo 'link' link}}
+                      {{link.user.username}}
+                    {{/linkTo}}
+                    {{timestamp link.created_time}}
+                  </p>
+                </div>
 
                 <div class="comments">
+                  {{#if link.caption.text}}
+                    <p>
+                      {{#linkTo 'link' link}}
+                        {{link.user.username}}
+                      {{/linkTo}}
+                      {{link.caption.text}}
+                    </p>
+                  {{/if}}
                   {{#each comment in link.comments.data}}
                     <p>
                     {{#linkTo 'link' link}}

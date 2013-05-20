@@ -1,6 +1,8 @@
 body {
 	background: #ebebeb;
 	font-size: 12px;
+	font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; 
+	 font-weight: 300;
 	padding-top: 50px;
 	-webkit-font-smoothing: antialiased;
       text-rendering: optimizeLegibility;
@@ -115,12 +117,22 @@ vertical-align: top;
 	margin-bottom: 0;
 }
 
+.caption time {
+	color: #afafaf;
+	float: right;
+	font-size: 11px;
+	font-style: italic;
+	font-weight: bold;
+	margin: 5px 0;
+}
+
 .comments {
 	margin: 10px;
 }
 
 .comments p {
 	margin-bottom: 5px;
+	word-wrap: break-word;
 }
 
 .sort-photos a {
