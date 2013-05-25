@@ -61,9 +61,14 @@
         });
         media.setProperties({links: links, loaded: true});
       });
+    },
+    findNext: function(id) {
+      console.log('something');
+      
+    },
+    findPrev: function(id) {
+
     }
-
-
   });
 
   EmberInstagram.Media.reopenClass({
@@ -72,6 +77,7 @@
     find: function(id) {
       if (!this.store[id]) {
         this.store[id] = EmberInstagram.Media.create({id: id});
+        console.log(this.store[id]);
       }
       return this.store[id];
     }
@@ -118,6 +124,8 @@
     find: function(id) {
       if (!this.store[id]) {
         this.store[id] = EmberInstagram.Link.create({id: id});
+
+        
       }
       return this.store[id];
     }
@@ -142,7 +150,17 @@
     }
   });
 
-  EmberInstagram.MediaController = Ember.ObjectController.extend();
+  EmberInstagram.MediaController = Ember.ObjectController.extend({
+    content: null,
+    findNext: function(id) {
+      console.log('next', id);
+      console.log(this);
+      this.get('content').findNext(id);
+    },
+    findPrev: function(id) {
+
+    }
+  });
 
   // Views
 
@@ -217,8 +235,14 @@
 
   EmberInstagram.LinkController = Ember.ObjectController.extend({
     needs: ['media'],
+    content: null,
+    init: function() {
+      console.log(this.get('content'));
+      this._super();
+    },
     nextPost: function() {
-      this.advancePost(1);
+      this.get('controllers.media').findNext(this.get('content.id'));
+      // this.advancePost(1);
     },
     previousPost: function() {
       this.advancePost(-1);
@@ -255,7 +279,8 @@
     },
 
     setupController: function(controller, model) {
-      model.loadDetails();
+      // model.loadDetails();
+      controller.set('content', model);
     },
   });
 
@@ -272,6 +297,9 @@
 
     setupController: function(controller, model) {
       model.loadLinks();
+      console.log(controller, model);
+      
+      controller.set('content', model);
     },
   });
 
