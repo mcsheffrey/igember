@@ -82,8 +82,8 @@ you can use the generic selector below, but it's slower:
 }
 
 .navbar .popular,
-.navbar .self,
-.icon-home {
+.navbar .recent,
+.navbar .self {
 	display: inline-block;
 	height: 31px;
 	position: relative;
@@ -95,8 +95,8 @@ you can use the generic selector below, but it's slower:
 }
 
 .navbar .popular:before,
-.navbar .self:before,
-.icon-home:before {
+.navbar .recent:before,
+.navbar .self:before {
 	color: #1a4564;
 	font-family: 'IG';
 	speak: none;
@@ -117,6 +117,7 @@ you can use the generic selector below, but it's slower:
 }
 
 .navbar .popular.active:before,
+.navbar .recent.active:before,
 .navbar .self.active:before {
 	background: #d6e0e8; /* Old browsers */
 	background: -moz-linear-gradient(top, #d6e0e8 0%, #e6ecf1 100%); /* FF3.6+ */
@@ -132,6 +133,7 @@ you can use the generic selector below, but it's slower:
 }
 
 .navbar .popular.active:after,
+.navbar .recent.active:after,
 .navbar .self.active:after {
 	color: #1a4564;
 	font-family: 'IG';
@@ -147,27 +149,33 @@ you can use the generic selector below, but it's slower:
 	top: 0;
 	left: 0;
 	text-indent: 0;
-	font-size: 33px;
+	font-size: 32px;
 	text-shadow: 0 1px 3px rgba(0,0,0,.5);
 	z-index: 1;
 }
 
-.navbar .self.active:after {
+.navbar .recent.active:after {
 	content: "\62";
-	font-size: 21px;
+	font-size: 22px;
 }
 
-.navbar .self {
+.navbar .recent {
 	height: 21px;
-	margin-top: 12px;
+	margin-top: 13px;
+	margin-left: 6px;
 	width: 26px;
 }
 
 .navbar .popular {
-	margin-top: 7px;
+	margin-top: 8px;
 }
 
-.navbar .self:before {
+.navbar .self.active:after {
+	content: "\65";
+	font-size: 22px;
+}
+
+.navbar .recent:before {
 	color: #1a4564;
 	font-family: 'IG';
 	speak: none;
@@ -186,13 +194,13 @@ you can use the generic selector below, but it's slower:
 	text-shadow: 0 -1px 1px rgba(0,0,0,.7);
 }
 
-.icon-home:before {
+.navbar .self:before {
 	content: "\65";
-	font-size: 20px;
+	font-size: 22px;
 }
 
-.icon-home {
-	margin-top: 13px;
+.navbar .self {
+	margin-top: 12px;
 }
 
 .nav-login {
@@ -229,6 +237,15 @@ you can use the generic selector below, but it's slower:
 	position: absolute;
 	left: 7px;
 	top: 7px;
+}
+
+.navbar .nav {
+	float: right;
+}
+
+.navbar .brand {
+	font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+	text-shadow: 0 1px 1px #1c5380;
 }
 
 body {
@@ -417,11 +434,12 @@ vertical-align: top;
 			box-shadow: inset 0px 1px 1px rgba(255, 255, 255, .4), 0 0 5px rgba(0, 0, 0, .4);
 	color: #fff;
 	font-weight: 600;
+	margin-top: -41px;
 	margin-left: -60px;
 	position: absolute;
 	padding: 5px 10px;
 	text-shadow: 0px -1px 1px rgba(0, 0, 0, .5);
-	// opacity: 0;
+	opacity: 0;
 
 	&::before,
 	&::after {
@@ -451,6 +469,7 @@ vertical-align: top;
 	&:hover {
 		background: rgba(26,103,166,.8);
 		border-color: #0d3658;
+		z-index: 100;
 
 		&::before {
 			background: rgba(26,103,166,.8);
@@ -479,6 +498,7 @@ vertical-align: top;
 	border: 1px solid #ddd;
 	-webkit-border-radius: 3px;
 	border-radius: 3px;
+	margin-right: 5px;
 }
 
 .caption p {
@@ -700,6 +720,17 @@ vertical-align: top;
 .photo-controls {
 	bottom: 0;
 	position: absolute;
+
+	&:before {
+		color: #afc1d1;
+		content: "\64";
+		font-family: 'IG';
+		position: absolute;
+		left: 10px;
+		font-size: 10px;
+		top: 10px;
+		z-index: 100;
+	}
 }
 
 .comment {
@@ -727,9 +758,7 @@ vertical-align: top;
 		outline: none;
 	}
 
-	&:before {
-
-	}
+	
 }
 
 .comment::-webkit-input-placeholder {
@@ -738,17 +767,53 @@ vertical-align: top;
 
 .btn-like {
 	background: #4a7fa5; /* Old browsers */
-	background: url('../images/heart.png'), -moz-linear-gradient(top, #4a7fa5 0%, #285f88 100%); /* FF3.6+ */
-	background: url('../images/heart.png'), -webkit-gradient(linear, left top, left bottom, color-stop(0%,#4a7fa5), color-stop(100%,#285f88)); /* Chrome,Safari4+ */
-	background: url('../images/heart.png'), -webkit-linear-gradient(top, #4a7fa5 0%,#285f88 100%); /* Chrome10+,Safari5.1+ */
-	background: url('../images/heart.png'), -o-linear-gradient(top, #4a7fa5 0%,#285f88 100%); /* Opera 11.10+ */
-	background: url('../images/heart.png'), -ms-linear-gradient(top, #4a7fa5 0%,#285f88 100%); /* IE10+ */
-	background: url('../images/heart.png'), linear-gradient(to bottom, #4a7fa5 0%,#285f88 100%); /* W3C */
+	background: -moz-linear-gradient(top, #4a7fa5 0%, #285f88 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#4a7fa5), color-stop(100%,#285f88)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top, #4a7fa5 0%,#285f88 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top, #4a7fa5 0%,#285f88 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top, #4a7fa5 0%,#285f88 100%); /* IE10+ */
+	background: linear-gradient(to bottom, #4a7fa5 0%,#285f88 100%); /* W3C */
 	background-repeat: no-repeat, no-repeat;
 	background-position: center, center;
 	border: 0;
 	height: 40px;
+	position: relative;
+	text-indent: -9999px;
 	width: 40px;
+
+	&:before {
+		background: #d6e0e8; /* Old browsers */
+		background: -moz-linear-gradient(top, #d6e0e8 0%, #e6ecf1 100%); /* FF3.6+ */
+		background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#d6e0e8), color-stop(100%,#e6ecf1)); /* Chrome,Safari4+ */
+		background: -webkit-linear-gradient(top, #d6e0e8 0%,#e6ecf1 100%); /* Chrome10+,Safari5.1+ */
+		background: -o-linear-gradient(top, #d6e0e8 0%,#e6ecf1 100%); /* Opera 11.10+ */
+		background: -ms-linear-gradient(top, #d6e0e8 0%,#e6ecf1 100%); /* IE10+ */
+		background: linear-gradient(to bottom, #d6e0e8 0%,#e6ecf1 100%); /* W3C */
+		-webkit-background-clip: text;
+		-webkit-text-fill-color: transparent;
+		display: initial;
+		color: #c8c8c8;
+		content: "\68";
+		font-family: 'IG';
+		position: absolute;
+		left: 13px;
+		top: 10px;
+		font-size: 12px;
+		text-indent: 0;
+		z-index: 3;
+	}
+
+	&:after {
+		content: "\68";
+		font-family: 'IG';
+		position: absolute;
+		left: 13px;
+		top: 10px;
+		font-size: 12px;
+		text-indent: 0;
+		text-shadow: 0 1px 3px rgba(0,0,0,.5);
+		z-index: 1;
+	}
 }
 
 .load-more-comments {

@@ -18,16 +18,15 @@
           </button>
           <a class="brand" href="./index.html">Ember.js Instagram demo</a>
 
+          <a {{action authorizeInstagram}} title="Login" class="nav-login">Sign In with Instagram</a>
+
           <nav class="header-nav nav">
-             <a class="icon-home active" href="#" title="Home">Home</a>
 
             {{#each media in medias}}
               {{#linkTo 'media' media classNameBindings="media.id"}}{{media.id}}{{/linkTo}}
             {{/each}}
           </nav>
-         
 
-          <a {{action authorizeInstagram}} title="Login" class="nav-login">Sign In with Instagram</a>
         </div>
       </div>
     </div>
@@ -35,8 +34,8 @@
     <div class="container">
       <div class="row">
         <div class="span10 sort-photos">
-          <a class="active" href="#" title="recent">recent</a>
-          <a href="#" title="popular">popular</a>
+          <a class="active" {{action sortRecent}} title="recent">recent</a>
+          <a {{action sortPopular}} title="popular">popular</a>
         </div>
         <div class="span2 text-right">
           <a class="grid-icon" {{action disableComments}} title="Recent">
@@ -63,7 +62,7 @@
         {{outlet}}
       </div>
     </div>
-      <footer><div class="container"><p>"This website uses the Instagram™ API and is not endorsed or certified by Instagram or Burbn, inc. All Instagram™ logos and trademarks displayed on this website are proprty of Burbn, Inc."</p></div></footer>
+      
    </script>
 
   <script type="text/x-handlebars" data-template-name="media">
@@ -80,9 +79,9 @@
                 <div class="image-container">
                   <img {{bindAttr src="link.images.low_resolution.url" alt="link.caption.text"}}>
 
-                  {{#if link.users_in_photo}}
-                    {{#each userphoto in link.users_in_photo}}
-                      <div class="user-photo" style="top:{{unbound link.userPositionX}}%;left:{{unbound link.userPositionY}}%;">{{userphoto.user.username}}</div>
+                  {{#if link.photosOfYou}}
+                    {{#each userphoto in link.photosOfYou}}
+                      <div class="user-photo" style="top:{{unbound userphoto.position.y}}%;left:{{unbound userphoto.position.x}}%;">{{userphoto.user.username}}</div>
                     {{/each}}
                   {{/if}}
                   {{#if link.videos}}
@@ -194,8 +193,8 @@
         </div>
         <div class="photo-controls">
           {{view Ember.TextArea valueBinding='comment' class="comment" name="comment" placeholder="leave a comment"}}
-          <button {{action like}} class="btn-like ir">Like</button>
-          <button {{action postLike}}>Test Post comment</button>
+          <button {{action like}} class="btn-like">Like</button>
+          
         </div>
       </div>
     </div>
@@ -216,7 +215,7 @@
 
     {{#linkTo 'media' controllers.media.content class="close-modal"}}close{{/linkTo}}
   </script>
-
+<!-- <footer><div class="container"><p>"This website uses the Instagram™ API and is not endorsed or certified by Instagram or Burbn, inc. All Instagram™ logos and trademarks displayed on this website are proprty of Burbn, Inc."</p></div></footer> -->
   <script src="js/libs/jquery-1.9.1.js"></script>
   <script src="js/libs/handlebars-1.0.0-rc.3.js"></script>
   <script src="js/libs/ember-1.0.0-rc.2.js"></script>
