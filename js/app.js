@@ -15,7 +15,8 @@
 
   // Array of different instagram feeds to filter by
   var photoFeeds = [
-    'popular'
+    'popular',
+    'self'
   ];
 
   window.EmberInstagram = Ember.Application.create({
@@ -30,13 +31,27 @@
     showComments: true,
     clientID: '5ee7e77d7b0b441f9cd307a5f30c92bb',
     authToken: JSON.parse(localStorage.getItem('token-instagram')).access_token,
+    baseUrl: 'https://api.instagram.com/v1/',
+    popularUrl: 'media/popular?client_id=5ee7e77d7b0b441f9cd307a5f30c92bb',
+    userUrl: 'users/self/feed?access_token=',
     url: function() {
-
-      return 'https://api.instagram.com/v1/users/self/feed?access_token=' + this.authToken + '&callback=?';
+      console.log(this.get('id'));
+      if (this.get('id') == 'popular') {
+        return this.baseUrl + this.userUrl + this.authToken + '&callback=?';
+      }
+      if (this.get('id') == 'user') {
+        return this.baseUrl + this.userUrl + this.authToken + '&callback=?';
+      }
     }.property('url'),
 
     loadLinks: function() {
       if (this.get('loaded')) return;
+      
+      
+      // if (this.get('controllers.media.id') == 'popular') {
+      //   console.log('pouplargram');
+        
+      // };
 
       var media = this;
       $.getJSON(this.get('url')).then(function(response) {
@@ -127,7 +142,9 @@
 
   EmberInstagram.ApplicationController = Ember.Controller.extend({
     title: function() {
+      console.log(this.get('controllers.media.id'));
       return this.get('controllers.media.id');
+      
     }.property('id'),
     needs: ['media'],
     disableComments: function() {
@@ -139,6 +156,15 @@
     authorizeInstagram: function() {
       EmberInstagram.oauth = Ember.OAuth2.create({providerId: 'instagram'});
       EmberInstagram.oauth.authorize();
+    },
+    selfFeed: function() {
+      console.log('self');
+      this.set('controllers.media.id', 'self');
+      console.log(this.get('controllers.media.id'));
+      
+    },
+    popularFeed: function() {
+      console.log('popular');
     }
   });
 
