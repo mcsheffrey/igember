@@ -37,9 +37,9 @@
     url: function() {
       console.log(this.get('id'));
       if (this.get('id') == 'popular') {
-        return this.baseUrl + this.userUrl + this.authToken + '&callback=?';
+        return this.baseUrl + this.popularUrl + '&callback=?';
       }
-      if (this.get('id') == 'user') {
+      if (this.get('id') == 'self') {
         return this.baseUrl + this.userUrl + this.authToken + '&callback=?';
       }
     }.property('url'),
@@ -165,6 +165,8 @@
     },
     popularFeed: function() {
       console.log('popular');
+      this.set('controllers.media.id', 'popular');
+      console.log(this.get('controllers.media.id'));
     }
   });
 
