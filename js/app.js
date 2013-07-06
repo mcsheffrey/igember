@@ -26,20 +26,25 @@
   Ember.OAuth2.reopen({ onSuccess: function() { return 'hello, onSuccess' } });
   Ember.OAuth2.reopen({ onError: function() { return 'hello, onError' } });
 
+
+ 
+
   EmberInstagram.Media = Ember.Object.extend({
     loaded: false,
     showComments: true,
     clientID: '5ee7e77d7b0b441f9cd307a5f30c92bb',
-    authToken: JSON.parse(localStorage.getItem('token-instagram')).access_token,
+    authToken: (JSON.parse(localStorage.getItem('token-instagram'))) ? JSON.parse(localStorage.getItem('token-instagram')).access_token : false,
     baseUrl: 'https://api.instagram.com/v1/',
-    popularUrl: 'media/popular?client_id=5ee7e77d7b0b441f9cd307a5f30c92bb',
+    popularUrl: 'media/popular?client_id=',
     userUrl: 'users/self/feed?access_token=',
     url: function() {
       console.log(this.get('id'));
-      if (this.get('id') == 'popular') {
-        return this.baseUrl + this.userUrl + this.authToken + '&callback=?';
+      if (!this.authToken || this.get('id') == 'popular') {
+
+        // 'https://api.instagram.com/v1/media/popular?client_id=5ee7e77d7b0b441f9cd307a5f30c92bb&callback=?'
+        return this.baseUrl + this.popularUrl + this.clientID + '&callback=?';
       }
-      if (this.get('id') == 'user') {
+      if (this.get('id') == 'self' && this.authToken) {
         return this.baseUrl + this.userUrl + this.authToken + '&callback=?';
       }
     }.property('url'),
@@ -57,7 +62,7 @@
       $.getJSON(this.get('url')).then(function(response) {
         var links = Em.A(),
             linkIndex = 0;
-        // console.log(response);
+        console.log(response);
 
         // Mapping next and previous thumbnails/urls to Ember object (this is probably the wrong way to do this :/ )
         response.data.forEach(function (child) {
@@ -307,7 +312,7 @@
       photoFeeds.forEach(function (id) {
         medias.push(EmberInstagram.Media.find(id));
       });
-      c.set('medias', medias)
+      c.set('medias', medias);
     }
 
   });

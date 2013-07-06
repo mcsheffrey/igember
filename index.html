@@ -25,13 +25,14 @@
           <div class="nav-collapse collapse">
             <ul class="nav">
               <li class="">
-                <a href="./index.html">{{title}}</a>
+                <a href="#">Test</a>
               </li>
             </ul>
           </div>
 
-          <a {{action selfFeed}} title="Login">Self</a>
-          <a {{action popularFeed}} title="Login">Popular</a>
+          {{#each media in medias}}
+            {{#linkTo 'media' media classNameBindings="media.id"}}{{media.id}}{{/linkTo}}
+          {{/each}}
 
           <a {{action authorizeInstagram}} title="Login">Login</a>
         </div>
