@@ -170,6 +170,8 @@
     },
     popularFeed: function() {
       console.log('popular');
+      this.set('controllers.media.id', 'popular');
+      console.log(this.get('controllers.media.id'));
     }
   });
 
@@ -331,6 +333,13 @@
     var parsed_date      = moment.unix(context).startOf('hour').fromNow();
     // var formatted_date   = parsed_date.format(formatter);
 
-    return new Handlebars.SafeString("<time datetime=" + original_date +">" + parsed_date + "</time>");
+    return new Handlebars.SafeString("<time datetime=" + context +">" + parsed_date + "</time>");
   });
+
+  Ember.Handlebars.registerBoundHelper('if_gt', function(context, options) {
+    if (context > options.hash.compare)
+      return options.fn(this);
+    return options.inverse(this);
+  });
+
 })();

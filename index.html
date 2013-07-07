@@ -22,19 +22,13 @@
           </button>
           <a class="brand" href="./index.html">Ember.js Instagram demo</a>
 
-          <div class="nav-collapse collapse">
-            <ul class="nav">
-              <li class="">
-                <a href="#">Test</a>
-              </li>
-            </ul>
-          </div>
+          <a class="icon-home active" href="#" title="Home">Home</a>
 
           {{#each media in medias}}
             {{#linkTo 'media' media classNameBindings="media.id"}}{{media.id}}{{/linkTo}}
           {{/each}}
 
-          <a {{action authorizeInstagram}} title="Login">Login</a>
+          <a {{action authorizeInstagram}} title="Login" class="nav-login">Sign In with Instagram</a>
         </div>
       </div>
     </div>
@@ -42,7 +36,7 @@
     <div class="container">
       <div class="row">
         <div class="span10 sort-photos">
-          <a href="#" title="recent">recent</a>
+          <a class="active" href="#" title="recent">recent</a>
           <a href="#" title="popular">popular</a>
         </div>
         <div class="span2 text-right">
@@ -57,7 +51,7 @@
             <span class="block"></span>
             <span class="block"></span>
           </a>
-          <a class="list-icon" {{action enableComments}} title="Popular">
+          <a class="list-icon active" {{action enableComments}} title="Popular">
             <span class="bar"></span>
             <span class="bar"></span>
             <span class="bar"></span>
@@ -66,10 +60,11 @@
         </div>
       </div>
 
-      <div class="row">
+      <div class="row photo-feed">
         {{outlet}}
       </div>
     </div>
+      <footer><div class="container"><p>"This website uses the Instagram™ API and is not endorsed or certified by Instagram or Burbn, inc. All Instagram™ logos and trademarks displayed on this website are proprty of Burbn, Inc."</p></div></footer>
    </script>
 
   <script type="text/x-handlebars" data-template-name="media">
@@ -100,21 +95,24 @@
                 </div>
 
                 <div class="comments">
-                  {{#if link.caption.text}}
-                    <p>
+                  <div class="comments-scroll">
+                    {{#if link.caption.text}}
+                      <p>
+                        {{#linkTo 'link' link}}
+                          {{link.user.username}}
+                        {{/linkTo}}
+                        {{link.caption.text}}
+                      </p>
+                    {{/if}}
+                    {{#each comment in link.comments.data}}
+                      <p>
                       {{#linkTo 'link' link}}
-                        {{link.user.username}}
+                        {{comment.from.username}}
                       {{/linkTo}}
-                      {{link.caption.text}}
-                    </p>
-                  {{/if}}
-                  {{#each comment in link.comments.data}}
-                    <p>
-                    {{#linkTo 'link' link}}
-                      {{comment.from.username}}
-                    {{/linkTo}}
-                    {{comment.text}}</p>
-                  {{/each}}
+                      {{comment.text}}</p>
+                    {{/each}}
+                  </div>
+                  {{#if_gt link.comments.count compare='10'}}<div class="load-more-comments">view all {{link.comments.count}} comments</div>{{/if_gt}}
                 </div>
 
               {{/if}}
@@ -178,6 +176,7 @@
             {{/linkTo}}
             {{comment.text}}</p>
           {{/each}}
+          {{#if_gt comments.count compare='10'}}<div class="load-more-comments">view all {{comments.count}} comments</div>{{/if_gt}}
         </div>
         <div class="photo-controls">
           {{view Ember.TextArea valueBinding='comment' class="comment" name="comment" placeholder="leave a comment"}}

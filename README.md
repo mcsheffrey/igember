@@ -10,7 +10,7 @@ Navigating prev/next from modal view + rendering prev/next thumbnails
 Keyboard shortcuts
 Google maps for long/lat
 Toggling between gallery and comment view
+oAuth
 
 Broken:
-oAuth
 Everything else

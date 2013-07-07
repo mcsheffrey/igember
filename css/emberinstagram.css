@@ -1,3 +1,158 @@
+@font-face {
+	font-family: 'icomoon';
+	src:url('/fonts/icomoon.eot');
+	src:url('/fonts/icomoon.eot?#iefix') format('embedded-opentype'),
+		url('/fonts/icomoon.svg#icomoon') format('svg'),
+		url('/fonts/icomoon.ttf') format('truetype');
+		
+	font-weight: normal;
+	font-style: normal;
+}
+
+/* Use the following CSS code if you want to use data attributes for inserting your icons */
+[data-icon]:before {
+	font-family: 'icomoon';
+	content: attr(data-icon);
+	speak: none;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1;
+	-webkit-font-smoothing: antialiased;
+}
+
+/* Use the following CSS code if you want to have a class per icon */
+/*
+Instead of a list of all class selectors,
+you can use the generic selector below, but it's slower:
+[class*="icon-"] {
+*/
+.icon-explore, .icon-feed, .icon-home, .icon-time, .icon-comment, .icon-Instagram {
+	font-family: 'icomoon';
+	speak: none;
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1;
+	-webkit-font-smoothing: antialiased;
+}
+.icon-explore:before {
+	content: "\61";
+}
+.icon-feed:before {
+	content: "\62";
+}
+.icon-home:before {
+	content: "\65";
+}
+.icon-time:before {
+	content: "\63";
+}
+.icon-comment:before {
+	content: "\64";
+}
+.icon-Instagram:before {
+	content: "\66";
+}
+
+
+.navbar .popular,
+.navbar .self {
+	display: inline-block;
+	height: 31px;
+	position: relative;
+	text-indent: -9999px;
+	width: 31px;
+}
+
+.navbar .popular:before {
+	color: #1a4564;
+	font-family: 'icomoon';
+	speak: none;
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1;
+	-webkit-font-smoothing: antialiased;
+	content: "\61";
+	position: absolute;
+	top: 0;
+	left: 0;
+	text-indent: 0;
+	font-size: 33px;
+	text-shadow: 0 -1px 1px rgba(0,0,0,.7);
+}
+
+.navbar .popular.active:before,
+.navbar .self.active:before {
+	background: #d6e0e8; /* Old browsers */
+	background: -moz-linear-gradient(top, #d6e0e8 0%, #e6ecf1 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#d6e0e8), color-stop(100%,#e6ecf1)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top, #d6e0e8 0%,#e6ecf1 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top, #d6e0e8 0%,#e6ecf1 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top, #d6e0e8 0%,#e6ecf1 100%); /* IE10+ */
+	background: linear-gradient(to bottom, #d6e0e8 0%,#e6ecf1 100%); /* W3C */
+	-webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: initial;
+  text-shadow: none;
+}
+
+.navbar .self {
+	height: 21px;
+	width: 26px;
+}
+
+.navbar .self:before {
+	color: #1a4564;
+	font-family: 'icomoon';
+	speak: none;
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1;
+	-webkit-font-smoothing: antialiased;
+	content: "\62";
+	position: absolute;
+	top: 0;
+	left: 0;
+	text-indent: 0;
+	font-size: 21px;
+	text-shadow: 0 -1px 1px rgba(0,0,0,.7);
+}
+
+.nav-login {
+	border: 1px solid #1c5380;
+	-webkit-background-clip: padding-box; /* fix WebKit background bleed on border-radius */
+	-webkit-border-radius: 3px;
+	   -moz-border-radius: 3px;
+	        border-radius: 3px;
+	box-shadow: rgba(0, 0, 0, 0.0980392) 0px 1px 3px 0px, 
+							rgba(255, 255, 255, 0.0470588) 1px 0px 0px 0px inset, 
+							rgba(255, 255, 255, 0.0470588) -1px 0px 0px 0px inset, 
+							rgba(255, 255, 255, 0.0980392) 0px 1px 0px 0px inset;
+	color: #fff;
+	display: inline-block;
+	float: right;
+	margin-top: 5px;
+	padding: 8px 5px 8px 36px;
+	position: relative;
+	text-shadow: 0 1px 1px #1c5380;
+}
+
+.nav-login:before {
+	content: "\66";
+	font-family: 'icomoon';
+	font-size: 20px;
+	-webkit-font-smoothing: antialiased;
+	position: absolute;
+	left: 7px;
+	top: 7px;
+}
+
 body {
 	background: #ebebeb;
 	font-size: 12px;
@@ -29,6 +184,10 @@ a {
 	width: 948px;
 }
 
+.photo-feed {
+	min-height: 800px;
+}
+
 .span4 {
 display: inline-block;
 float: none;
@@ -38,7 +197,7 @@ vertical-align: top;
 .grid-icon {
 	height: 14px;
 	display: inline-block;
-	margin: 10px 16px 6px 0;
+	margin: 30px 16px 6px 0;
 	width: 15px;
 }
 
@@ -50,7 +209,8 @@ vertical-align: top;
   margin-left: 1px;
   width: 4px; }
 
-.grid-icon:hover .block {
+.grid-icon:hover .block,
+.grid-icon.active .block {
 	background: #555555;
 }
 
@@ -70,11 +230,12 @@ vertical-align: top;
 .list-icon {
 	height: 14px;
 	display: inline-block;
-	margin: 10px 0 6px 0;
+	margin: 30px 0 6px 0;
 	width: 14px;
 }
 
-.list-icon:hover .bar {
+.list-icon:hover .bar,
+.list-icon.active .bar {
 	background: #555555;
 }
 
@@ -126,8 +287,16 @@ vertical-align: top;
 	margin: 5px 0;
 }
 
+.caption time:before {
+	content: "\63";
+	font-family: 'icomoon';
+	margin-right: 5px;
+}
+
 .comments {
 	margin: 10px;
+	max-height: 300px;
+	overflow-x: scroll;
 }
 
 .comments p {
@@ -138,11 +307,12 @@ vertical-align: top;
 .sort-photos a {
 	color: #aaa;
 	display: inline-block;
-	margin: 10px 10px 10px 0;
+	margin: 25px 10px 25px 0;
 	text-decoration: none;
 }
 
-.sort-photos a:hover {
+.sort-photos a:hover,
+.sort-photos a.active {
 	color: #494949;
 }
 
@@ -265,6 +435,18 @@ vertical-align: top;
 	border: 0;
 	height: 37px;
 	width: 40px;
+}
+
+.load-more-comments {
+	color: #aaa;
+	cursor: pointer;
+	font-weight: 600;
+	margin: 1em 0;
+	text-align: center;
+}
+
+.load-more-comments:hover {
+	color: #555;
 }
 
 .nav-modal {
