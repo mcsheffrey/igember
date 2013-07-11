@@ -22,11 +22,14 @@
           </button>
           <a class="brand" href="./index.html">Ember.js Instagram demo</a>
 
-          <a class="icon-home active" href="#" title="Home">Home</a>
+          <nav class="header-nav nav">
+             <a class="icon-home active" href="#" title="Home">Home</a>
 
-          {{#each media in medias}}
-            {{#linkTo 'media' media classNameBindings="media.id"}}{{media.id}}{{/linkTo}}
-          {{/each}}
+            {{#each media in medias}}
+              {{#linkTo 'media' media classNameBindings="media.id"}}{{media.id}}{{/linkTo}}
+            {{/each}}
+          </nav>
+         
 
           <a {{action authorizeInstagram}} title="Login" class="nav-login">Sign In with Instagram</a>
         </div>
@@ -93,7 +96,7 @@
                     {{timestamp link.created_time}}
                   </p>
                 </div>
-
+                
                 <div class="comments">
                   <div class="comments-scroll">
                     {{#if link.caption.text}}

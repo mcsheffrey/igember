@@ -1,0 +1,624 @@
+@font-face {
+	font-family: 'icomoon';
+	src:url('/fonts/icomoon.eot');
+	src:url('/fonts/icomoon.eot?#iefix') format('embedded-opentype'),
+		url('/fonts/icomoon.svg#icomoon') format('svg'),
+		url('/fonts/icomoon.ttf') format('truetype');
+		
+	font-weight: normal;
+	font-style: normal;
+}
+
+/* Use the following CSS code if you want to use data attributes for inserting your icons */
+[data-icon]:before {
+	font-family: 'icomoon';
+	content: attr(data-icon);
+	speak: none;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1;
+	-webkit-font-smoothing: antialiased;
+}
+
+/* Use the following CSS code if you want to have a class per icon */
+/*
+Instead of a list of all class selectors,
+you can use the generic selector below, but it's slower:
+[class*="icon-"] {
+*/
+.icon-explore, .icon-feed, .icon-home, .icon-time, .icon-comment, .icon-Instagram {
+	font-family: 'icomoon';
+	speak: none;
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1;
+	-webkit-font-smoothing: antialiased;
+}
+.icon-explore:before {
+	content: "\61";
+}
+.icon-feed:before {
+	content: "\62";
+}
+.icon-home:before {
+	content: "\65";
+}
+.icon-time:before {
+	content: "\63";
+}
+.icon-comment:before {
+	content: "\64";
+}
+.icon-Instagram:before {
+	content: "\66";
+}
+
+.icon-home {
+	font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; 
+}
+
+.header-nav {
+	display: inline-block;
+}
+
+.navbar .popular,
+.navbar .self,
+.icon-home {
+	display: inline-block;
+	height: 31px;
+	position: relative;
+	text-indent: -9999px;
+	width: 31px;
+}
+
+.navbar .popular:before,
+.icon-home:before {
+	color: #1a4564;
+	font-family: 'icomoon';
+	speak: none;
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1;
+	-webkit-font-smoothing: antialiased;
+	content: "\61";
+	position: absolute;
+	top: 0;
+	left: 0;
+	text-indent: 0;
+	font-size: 33px;
+	text-shadow: 0 -1px 1px rgba(0,0,0,.7);
+}
+
+.navbar .popular.active:before,
+.navbar .self.active:before {
+	background: #d6e0e8; /* Old browsers */
+	background: -moz-linear-gradient(top, #d6e0e8 0%, #e6ecf1 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#d6e0e8), color-stop(100%,#e6ecf1)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top, #d6e0e8 0%,#e6ecf1 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top, #d6e0e8 0%,#e6ecf1 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top, #d6e0e8 0%,#e6ecf1 100%); /* IE10+ */
+	background: linear-gradient(to bottom, #d6e0e8 0%,#e6ecf1 100%); /* W3C */
+	-webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: initial;
+  text-shadow: none;
+}
+
+.navbar .self {
+	height: 21px;
+	width: 26px;
+}
+
+.navbar .self:before {
+	color: #1a4564;
+	font-family: 'icomoon';
+	speak: none;
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1;
+	-webkit-font-smoothing: antialiased;
+	content: "\62";
+	position: absolute;
+	top: 0;
+	left: 0;
+	text-indent: 0;
+	font-size: 21px;
+	text-shadow: 0 -1px 1px rgba(0,0,0,.7);
+}
+
+.icon-home:before {
+	content: "\65";
+	font-size: 20px;
+}
+
+.nav-login {
+	border: 1px solid #1c5380;
+	-webkit-background-clip: padding-box; /* fix WebKit background bleed on border-radius */
+	-webkit-border-radius: 3px;
+	   -moz-border-radius: 3px;
+	        border-radius: 3px;
+	box-shadow: rgba(0, 0, 0, 0.0980392) 0px 1px 3px 0px, 
+							rgba(255, 255, 255, 0.0470588) 1px 0px 0px 0px inset, 
+							rgba(255, 255, 255, 0.0470588) -1px 0px 0px 0px inset, 
+							rgba(255, 255, 255, 0.0980392) 0px 1px 0px 0px inset;
+	color: #fff;
+	cursor: pointer;
+	display: inline-block;
+	float: right;
+	margin-top: 5px;
+	padding: 8px 5px 8px 36px;
+	position: relative;
+	text-shadow: 0 1px 1px #1c5380;
+}
+
+.nav-login:hover {
+	background: rgba(0,0,0,.1);
+	color: #fff;
+	text-decoration: none;
+}
+
+.nav-login:before {
+	content: "\66";
+	font-family: 'icomoon';
+	font-size: 20px;
+	-webkit-font-smoothing: antialiased;
+	position: absolute;
+	left: 7px;
+	top: 7px;
+}
+
+body {
+	background: #ebebeb;
+	font-size: 12px;
+	font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; 
+	 font-weight: 300;
+	padding-top: 50px;
+	-webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+}
+
+.navbar-inner {
+	background: #4a7fa5; /* Old browsers */
+	background: -moz-linear-gradient(top, #4a7fa5 0%, #285f88 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#4a7fa5), color-stop(100%,#285f88)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top, #4a7fa5 0%,#285f88 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top, #4a7fa5 0%,#285f88 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top, #4a7fa5 0%,#285f88 100%); /* IE10+ */
+	background: linear-gradient(to bottom, #4a7fa5 0%,#285f88 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#4a7fa5', endColorstr='#285f88',GradientType=0 ); /* IE6-9 */
+	border-bottom: 1px solid #2a2a2a;
+}
+
+a {
+	color: #2e5e86;
+	font-weight: bold;
+}
+
+.container {
+	width: 948px;
+}
+
+.photo-feed {
+	min-height: 800px;
+}
+
+.span4 {
+display: inline-block;
+float: none;
+vertical-align: top;
+}
+
+.grid-icon {
+	height: 14px;
+	display: inline-block;
+	margin: 30px 16px 6px 0;
+	width: 15px;
+}
+
+.block {
+  background: #cdcdcd;
+  float: left;
+  height: 4px;
+  margin-top: 1px;
+  margin-left: 1px;
+  width: 4px; }
+
+.grid-icon:hover .block,
+.grid-icon.active .block {
+	background: #555555;
+}
+
+.block.top-row {
+  margin-top: 0;
+}
+
+.bar {
+  background: #cdcdcd;
+  display: block;
+  float: left;
+  height: 2px;
+  width: 14px;
+  margin: 0 auto;
+}
+
+.list-icon {
+	height: 14px;
+	display: inline-block;
+	margin: 30px 0 6px 0;
+	width: 14px;
+}
+
+.list-icon:hover .bar,
+.list-icon.active .bar {
+	background: #555555;
+}
+
+.list-icon .bar:nth-child(even){
+	width: 10px;
+}
+
+.bar + .bar {
+  margin-top: 2px;
+}
+
+.photo {
+	background: #fafafa;
+	border: 1px solid #c0c0c0;
+	-webkit-border-radius: 3px;
+	border-radius: 3px;
+	-webkit-box-shadow: 0 1px 16px rgba(0, 0, 0, 0.1);
+	-moz-box-shadow: 0 1px 16px rgba(0, 0, 0, 0.1);
+	box-shadow: 0 1px 16px rgba(0, 0, 0, 0.1);
+	text-align: left;
+	margin-bottom: 20px;
+}
+
+.profile {
+	width: 28px;
+}
+
+.caption {
+	border-bottom: 1px solid #e7e7e7;
+	padding: 10px;
+}
+
+.caption img {
+	border: 1px solid #ddd;
+	-webkit-border-radius: 3px;
+	border-radius: 3px;
+}
+
+.caption p {
+	margin-bottom: 0;
+}
+
+.caption time {
+	color: #afafaf;
+	float: right;
+	font-size: 11px;
+	font-style: italic;
+	font-weight: bold;
+	margin: 5px 0;
+}
+
+.caption time:before {
+	content: "\63";
+	font-family: 'icomoon';
+	margin-right: 5px;
+}
+
+.comments {
+	margin: 10px;
+	max-height: 300px;
+	overflow-x: scroll;
+}
+
+.comments p {
+	margin-bottom: 5px;
+	word-wrap: break-word;
+}
+
+.sort-photos a {
+	color: #aaa;
+	display: inline-block;
+	margin: 25px 10px 25px 0;
+	text-decoration: none;
+}
+
+.sort-photos a:hover,
+.sort-photos a.active {
+	color: #494949;
+}
+
+.link-view {
+	height: 0;
+	overflow: hidden;
+	opacity: 0;
+	-webkit-transition: opacity 0.1s linear;
+  -moz-transition: opacity 0.1s linear;
+  -o-transition: opacity 0.1s linear;
+  transition: opacity 0.1s linear;
+	position: fixed;
+	margin: -306px 0 0 -412px;
+	top: 50%;
+	left: 50%;
+	z-index: 200;
+}
+
+.photo-modal {
+	background: #fafafa;
+	-webkit-box-shadow: 0px 0px 180px rgba(0, 0, 0, .3);
+					box-shadow: 0px 0px 180px rgba(0, 0, 0, .3);
+	position: fixed;
+	width: 825px;
+	top: 50%;
+	margin-top: -250px;
+	z-index: 200;
+}
+
+.media-info {
+	display: inline-block;
+	float: right;
+	width: 325px;
+}
+
+.modal-image {
+	display: inline-block;
+	float: left;
+}
+
+.modal-image img {
+	width: 500px;
+}
+
+.enabled.link-view {
+	opacity: 1;
+	height: auto;
+}
+
+.loading {
+	opacity: .5;
+}
+
+.close-modal {
+	background: rgba(0,0,0,.8);
+	position: fixed;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+	text-indent: -9999px;
+	z-index: 199;
+}
+
+.place-map {
+	height: 100px;
+	background-position: 50% 50%;
+	overflow: hidden;
+}
+
+.place-map b {
+	background: url('https://pathakacdn-a.akamaihd.net/web-assets/images/map-pin-small_8e540939b3bd34cefe06033d74170e47a9be1446.png') no-repeat 50% 50%;
+	border: 1px solid rgba(0,0,0,0.2);
+	display: block;
+	position: relative;
+	height: 100%;
+	width: 100%;
+	border-top: 0;
+	border-left: none;
+	border-right: 0;
+	top: -1px;
+}
+
+.photo-controls {
+	bottom: 0;
+	position: absolute;
+}
+
+.comment {
+	background: #dbe3ea;
+	-webkit-background-clip: padding-box; /* fix WebKit background bleed on border-radius */
+	-webkit-border-radius: 0;
+	   -moz-border-radius: 0;
+	        border-radius: 0;
+	border: 0;
+	-webkit-box-shadow: 0 0 0;
+	   -moz-box-shadow: 0 0 0;
+	        box-shadow: 0 0 0; /* inset offset-x offset-y blur spread color */
+	color: #2e5e86;
+	float: left;
+	margin: 0;
+	padding: 12px 12px 12px 30px;
+	width: 243px;
+}
+
+.comment::-webkit-input-placeholder {
+  color: #9aadbf;
+}
+
+.btn-like {
+	background: #4a7fa5; /* Old browsers */
+	background: url('../images/heart.png'), -moz-linear-gradient(top, #4a7fa5 0%, #285f88 100%); /* FF3.6+ */
+	background: url('../images/heart.png'), -webkit-gradient(linear, left top, left bottom, color-stop(0%,#4a7fa5), color-stop(100%,#285f88)); /* Chrome,Safari4+ */
+	background: url('../images/heart.png'), -webkit-linear-gradient(top, #4a7fa5 0%,#285f88 100%); /* Chrome10+,Safari5.1+ */
+	background: url('../images/heart.png'), -o-linear-gradient(top, #4a7fa5 0%,#285f88 100%); /* Opera 11.10+ */
+	background: url('../images/heart.png'), -ms-linear-gradient(top, #4a7fa5 0%,#285f88 100%); /* IE10+ */
+	background: url('../images/heart.png'), linear-gradient(to bottom, #4a7fa5 0%,#285f88 100%); /* W3C */
+	background-repeat: no-repeat, no-repeat;
+	background-position: center, center;
+	border: 0;
+	height: 37px;
+	width: 40px;
+}
+
+.load-more-comments {
+	color: #aaa;
+	cursor: pointer;
+	font-weight: 600;
+	margin: 1em 0;
+	text-align: center;
+}
+
+.load-more-comments:hover {
+	color: #555;
+}
+
+.nav-modal {
+	background: #000;
+	-webkit-box-shadow: 0 0 16px rgba(0,0,0,.3);
+	   -moz-box-shadow: 0 0 16px rgba(0,0,0,.3);
+	        box-shadow: 0 0 16px rgba(0,0,0,.3); /* inset offset-x offset-y blur spread color */
+	
+	display: inline-block;
+	margin-top: -26px;
+	position: fixed;
+	top: 50%;
+	z-index: 200;
+}
+
+.nav-modal:hover {
+	text-decoration: none;
+}
+
+.nav-modal img {
+	height: 56px;
+	width: 56px;
+}
+
+.prev-photo {
+	left: 0;
+}
+
+.next-photo {
+	right: 0;
+}
+
+.arrow {
+	display: inline-block;
+	margin: 0 10px;
+	vertical-align: middle;
+}
+
+.arrow-left {
+	width: 0px;
+	height: 0px;
+	border-top: 7px solid transparent;
+	border-bottom: 7px solid transparent;
+	border-right: 10px solid #4d4d4d;
+}
+
+.arrow-right {
+	width: 0px;
+	height: 0px;
+	border-top: 7px solid transparent;
+	border-bottom: 7px solid transparent;
+	border-left: 10px solid #4d4d4d;
+}
+
+/* ==========================================================================
+   Helper classes
+   ========================================================================== */
+
+/*
+ * Image replacement
+ */
+
+.ir {
+    background-color: transparent;
+    border: 0;
+    overflow: hidden;
+    /* IE 6/7 fallback */
+    *text-indent: -9999px;
+}
+
+.ir:before {
+    content: "";
+    display: block;
+    width: 0;
+    height: 150%;
+}
+
+/*
+ * Hide from both screenreaders and browsers: h5bp.com/u
+ */
+
+.hidden {
+    display: none !important;
+    visibility: hidden;
+}
+
+/*
+ * Hide only visually, but have it available for screenreaders: h5bp.com/v
+ */
+
+.visuallyhidden {
+    border: 0;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+}
+
+/*
+ * Extends the .visuallyhidden class to allow the element to be focusable
+ * when navigated to via the keyboard: h5bp.com/p
+ */
+
+.visuallyhidden.focusable:active,
+.visuallyhidden.focusable:focus {
+    clip: auto;
+    height: auto;
+    margin: 0;
+    overflow: visible;
+    position: static;
+    width: auto;
+}
+
+/*
+ * Hide visually and from screenreaders, but maintain layout
+ */
+
+.invisible {
+    visibility: hidden;
+}
+
+/*
+ * Clearfix: contain floats
+ *
+ * For modern browsers
+ * 1. The space content is one way to avoid an Opera bug when the
+ *    `contenteditable` attribute is included anywhere else in the document.
+ *    Otherwise it causes space to appear at the top and bottom of elements
+ *    that receive the `clearfix` class.
+ * 2. The use of `table` rather than `block` is only necessary if using
+ *    `:before` to contain the top-margins of child elements.
+ */
+
+.clearfix:before,
+.clearfix:after {
+    content: " "; /* 1 */
+    display: table; /* 2 */
+}
+
+.clearfix:after {
+    clear: both;
+}
+
+/*
+ * For IE 6/7 only
+ * Include this rule to trigger hasLayout and contain floats.
+ */
+
+.clearfix {
+    *zoom: 1;
+}

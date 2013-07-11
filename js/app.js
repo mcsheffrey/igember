@@ -16,7 +16,8 @@
   // Array of different instagram feeds to filter by
   var photoFeeds = [
     'popular',
-    'self'
+    'self',
+    'recent'
   ];
 
   window.EmberInstagram = Ember.Application.create({
@@ -37,6 +38,7 @@
     baseUrl: 'https://api.instagram.com/v1/',
     popularUrl: 'media/popular?client_id=',
     userUrl: 'users/self/feed?access_token=',
+    recentUrl: '/users/' + this.userId  + '/media/recent?access_token=',
     url: function() {
       console.log(this.get('id'));
       if (!this.authToken || this.get('id') == 'popular') {
@@ -46,6 +48,9 @@
       }
       if (this.get('id') == 'self' && this.authToken) {
         return this.baseUrl + this.userUrl + this.authToken + '&callback=?';
+      }
+      if (this.get('id') == 'recent' && this.authToken) {
+         return this.baseUrl + '/users/' + this.authToken.substr(0, this.authToken.indexOf('.'))  + '/media/recent?access_token=' + this.authToken + '&callback=?';
       }
     }.property('url'),
 
