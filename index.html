@@ -88,15 +88,16 @@
 
               {{#if showComments}}
                <div class="caption">
-                  <p>
-                    <img class="profile" {{bindAttr src="link.user.profile_picture"}} />
-                    {{#linkTo 'link' link}}
-                      {{link.user.username}}
-                    {{/linkTo}}
-                    {{timestamp link.created_time}}
-                  </p>
-                </div>
-                
+                <p>
+                  <img class="profile" {{bindAttr src="link.user.profile_picture"}} />
+                  {{#linkTo 'link' link}}
+                    {{link.user.username}}
+                  {{/linkTo}}
+                  {{timestamp link.created_time}}
+                </p>
+              </div>
+              <div class="likes">{{link.likes.count}} likes </div>
+
                 <div class="comments">
                   <div class="comments-scroll">
                     {{#if link.caption.text}}
@@ -163,14 +164,21 @@
               {{#linkTo 'media' controllers.media.content }}
                 {{user.username}}
               {{/linkTo}}
-              {{caption.text}}
               {{timestamp created_time}}
             </p>
           
         </div>
         {{/if}}
-
+        <div class="likes">{{likes.count}} Likes </div>
         <div class="comments">
+          {{#if caption.text}}
+            <p>
+              {{#linkTo 'media' controllers.media.content}}
+                {{user.username}}
+              {{/linkTo}}
+              {{caption.text}}
+            </p>
+          {{/if}}
           {{#each comment in comments.data}}
             <p>
             
@@ -186,13 +194,15 @@
           <button {{action like}} class="btn-like ir">Like</button>
         </div>
       </div>
-    {{#if previousMediaThumb}}
     </div>
+
+    {{#if previousMediaThumb}}
       <div {{action previousPost}} class="prev-photo nav-modal">
         <div class="arrow-left arrow"></div>
         <img {{bindAttr src="previousMediaThumb" alt="caption.text"}}>
       </div>
     {{/if}}
+
     {{#if nextMediaThumb}}
       <div {{action nextPost}} class="next-photo nav-modal">
         <img {{bindAttr src="nextMediaThumb" alt="caption.text"}}>

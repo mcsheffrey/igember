@@ -70,8 +70,11 @@ you can use the generic selector below, but it's slower:
 	display: inline-block;
 	height: 31px;
 	position: relative;
+	margin-right: 10px;
 	text-indent: -9999px;
 	width: 31px;
+	vertical-align: top;
+	z-index: 3;
 }
 
 .navbar .popular:before,
@@ -92,6 +95,7 @@ you can use the generic selector below, but it's slower:
 	text-indent: 0;
 	font-size: 33px;
 	text-shadow: 0 -1px 1px rgba(0,0,0,.7);
+	z-index: 2;
 }
 
 .navbar .popular.active:before,
@@ -109,9 +113,40 @@ you can use the generic selector below, but it's slower:
   text-shadow: none;
 }
 
+.navbar .popular.active:after,
+.navbar .self.active:after {
+	color: #1a4564;
+	font-family: 'icomoon';
+	speak: none;
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1;
+	-webkit-font-smoothing: antialiased;
+	content: "\61";
+	position: absolute;
+	top: 0;
+	left: 0;
+	text-indent: 0;
+	font-size: 33px;
+	text-shadow: 0 1px 3px rgba(0,0,0,.5);
+	z-index: 1;
+}
+
+.navbar .self.active:after {
+	content: "\62";
+	font-size: 21px;
+}
+
 .navbar .self {
 	height: 21px;
+	margin-top: 12px;
 	width: 26px;
+}
+
+.navbar .popular {
+	margin-top: 7px;
 }
 
 .navbar .self:before {
@@ -136,6 +171,10 @@ you can use the generic selector below, but it's slower:
 .icon-home:before {
 	content: "\65";
 	font-size: 20px;
+}
+
+.icon-home {
+	margin-top: 13px;
 }
 
 .nav-login {
@@ -306,23 +345,58 @@ vertical-align: top;
 	font-style: italic;
 	font-weight: bold;
 	margin: 5px 0;
+	position: relative;
+	padding-left: 26px;
+
 }
 
 .caption time:before {
 	content: "\63";
 	font-family: 'icomoon';
 	margin-right: 5px;
+	position: absolute;
+	left: 9px;
+	font-size: 11px;
+	top: 1px;
+}
+
+.likes {
+	color: #2e5e86;
+	font-weight: bold;
+	padding-left: 30px;
+	position: relative;
+	margin: 15px 0 0 0
+}
+
+.likes:before {
+	color: #c8c8c8;
+	content: "\64";
+	font-family: 'icomoon';
+	position: absolute;
+	left: 10px;
+	font-size: 10px
 }
 
 .comments {
-	margin: 10px;
+	padding: 4px 10px 10px 30px;
 	max-height: 300px;
+	position: relative;
 	overflow-x: scroll;
+
+	&:before {
+		color: #c8c8c8;
+		content: "\64";
+		font-family: 'icomoon';
+		position: absolute;
+		left: 10px;
+		font-size: 10px
+	}
 }
 
 .comments p {
 	margin-bottom: 5px;
 	word-wrap: break-word;
+
 }
 
 .sort-photos a {
@@ -433,10 +507,23 @@ vertical-align: top;
 	   -moz-box-shadow: 0 0 0;
 	        box-shadow: 0 0 0; /* inset offset-x offset-y blur spread color */
 	color: #2e5e86;
+	font-size: 12px;
 	float: left;
+	letter-spacing: 1px;
+	height: 20px;
 	margin: 0;
-	padding: 12px 12px 12px 30px;
+	padding: 10px 12px 10px 30px;
+	position: relative;
 	width: 243px;
+	outline: none;
+
+	&:focus {
+		outline: none;
+	}
+
+	&:before {
+
+	}
 }
 
 .comment::-webkit-input-placeholder {
@@ -454,16 +541,21 @@ vertical-align: top;
 	background-repeat: no-repeat, no-repeat;
 	background-position: center, center;
 	border: 0;
-	height: 37px;
+	height: 40px;
 	width: 40px;
 }
 
 .load-more-comments {
+	background: #fafafa;
+	bottom: 0;
 	color: #aaa;
 	cursor: pointer;
 	font-weight: 600;
+	left: 0;
 	margin: 1em 0;
 	text-align: center;
+	position: absolute;
+	width: 100%;
 }
 
 .load-more-comments:hover {
