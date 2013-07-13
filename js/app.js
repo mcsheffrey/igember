@@ -6,7 +6,7 @@
     instagram: {
       clientId: "78e0cc2b8e2440c385969867dc38b7c6",
       authBaseUri: 'https://instagram.com/oauth/authorize/',
-      redirectUri: 'http://localhost:8000/callback.html',
+      redirectUri: 'http://mcsheffrey.github.io/igember/callback.html',
       scope: 'basic comments relationships likes'
     } 
   }
