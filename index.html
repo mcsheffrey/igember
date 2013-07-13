@@ -77,7 +77,7 @@
         {{#each link in links}}
           <div class="span4">
             <div class="photo">
-              {{#linkTo "subreddit.link" link}}
+              {{#linkTo 'link' link}}
                 <div class="image-container">
                   <img {{bindAttr src="link.images.low_resolution.url" alt="link.caption.text"}}>
                 </div>
