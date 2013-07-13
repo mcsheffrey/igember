@@ -106,7 +106,6 @@
   // Single Image model
   EmberInstagram.Link = Ember.Object.extend({
 
-
     // Computed properties, just the Google Maps API Url for now, I'm guess there will be more here eventually
     mapUrl: function() {
       var latitude = this.get('location.latitude');
@@ -140,12 +139,12 @@
 
   });
 
-  EmberInstagram.SubredditLink.reopenClass({
+  EmberInstagram.Link.reopenClass({
     store: {},
 
     find: function(id) {
       if (!this.store[id]) {
-        this.store[id] = EmberInstagram.SubredditLink.create({id: id});
+        this.store[id] = EmberInstagram.Link.create({id: id});
       }
       return this.store[id];
     }
@@ -215,7 +214,7 @@
     }
   });
 
-  EmberInstagram.SubredditLinkView = Ember.View.extend({
+  EmberInstagram.LinkView = Ember.View.extend({
     classNames: ['link-view'],
     isEnabled: false,
     classNameBindings: ['isEnabled:enabled:disabled'],
@@ -275,15 +274,13 @@
 
   });
 
-  EmberInstagram.SubredditLinkRoute = Ember.Route.extend({
+  EmberInstagram.LinkRoute = Ember.Route.extend({
     serialize: function(model) {
       return {link_id: model.get('id')};
     },
 
     model: function(params) {
-      console.log(params);
-      
-      return EmberInstagram.SubredditLink.find(params.link_id);
+      return EmberInstagram.Link.find(params.link_id);
     },
 
     setupController: function(controller, model) {
@@ -303,7 +300,6 @@
     },
 
     setupController: function(controller, model) {
-
       model.loadLinks();
     },
   });
