@@ -8,9 +8,6 @@
 </head>
 <body>
 
-<!--       {{#each media in medias}}
-      <li>{{#linkTo 'media' media}}{{media.title}}{{/linkTo}}</li>
-    {{/each}} -->
   <script type='text/x-handlebars' data-template-name="application">
     <div class="navbar navbar-fixed-top">
       <div class="navbar-inner">
@@ -116,7 +113,11 @@
                       {{comment.text}}</p>
                     {{/each}}
                   </div>
-                  {{#if_gt link.comments.count compare='10'}}<div class="load-more-comments">view all {{link.comments.count}} comments</div>{{/if_gt}}
+                  {{#if_gt link.comments.count compare='10'}}
+                    {{#linkTo 'link' link class="load-more-comments"}}
+                      view all {{link.comments.count}} comments
+                    {{/linkTo}}
+                  {{/if_gt}}
                 </div>
 
               {{/if}}
@@ -130,23 +131,12 @@
       Loading...
     {{/if}}
   </script>
-<!-- <p><img class="profile" {{bindAttr src="comment.from.profile_picture"}} /> -->
-<!--   
-            {{#if link.thumbnailUrl}}
-              <div class="span1">
-                <img {{bindAttr src="link.thumbnailUrl"}}>
-              </div>
-            {{/if}}
-
-              {{#linkTo 'link' link}}{{link.title}}{{/linkTo}}
-              <span class='domain'>({{link.domain}})</span>
- -->
 
   <script type="text/x-handlebars" data-template-name="link">
   {{log content}}
     <div class="photo-modal clearfix">
       <div class="modal-image">
-        <img {{bindAttr src="images.standard_resolution.url" alt="caption.text"}}>
+        <img height="298" width="298" {{bindAttr src="images.standard_resolution.url" alt="caption.text"}}>
       </div>
       <div class="media-info">
 
@@ -187,7 +177,6 @@
             {{/linkTo}}
             {{comment.text}}</p>
           {{/each}}
-          {{#if_gt comments.count compare='10'}}<div class="load-more-comments">view all {{comments.count}} comments</div>{{/if_gt}}
         </div>
         <div class="photo-controls">
           {{view Ember.TextArea valueBinding='comment' class="comment" name="comment" placeholder="leave a comment"}}
@@ -212,13 +201,13 @@
 
     {{#linkTo 'media' controllers.media.content class="close-modal"}}close{{/linkTo}}
   </script>
-  <!-- <img class="profile" {{bindAttr src="comment.from.profile_picture"}} /> -->
 
   <script src="js/libs/jquery-1.9.1.js"></script>
   <script src="js/libs/handlebars-1.0.0-rc.3.js"></script>
   <script src="js/libs/ember-1.0.0-rc.2.js"></script>
   <script src="js/libs/bootstrap.min.js"></script>
   <script src="src/ember.oauth2.js"></script>
+  <script src="js/libs/jquery.wookmark.min.js"></script>
   <script src="js/libs/jquery.imagesloaded.min.js"></script>
   <script src="js/libs/moment.min.js"></script>
   <script src="js/app.js"></script>

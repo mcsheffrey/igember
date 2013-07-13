@@ -15,8 +15,8 @@
 
   // Array of different instagram feeds to filter by
   var photoFeeds = [
-    'popular',
     'self',
+    'popular',
     'recent'
   ];
 
@@ -79,11 +79,12 @@
           if (linkIndex < response.data.length-1) {
             child.nextMediaThumb = response.data[linkIndex+1].images.thumbnail.url;
           }
-
+          
           links.push(EmberInstagram.Link.create(child));
 
           linkIndex++;
         });
+
         media.setProperties({links: links, loaded: true});
       });
     }
@@ -102,7 +103,7 @@
     }
   });
 
-  // Our Link model
+  // Single Image model
   EmberInstagram.Link = Ember.Object.extend({
 
     // Computed properties, just the Google Maps API Url for now, I'm guess there will be more here eventually
@@ -118,6 +119,7 @@
 
     }.property('location.latitude', 'location.longitude'),
 
+    // We want to grab the single image endpoint here (requires oAuth)
     loadDetails: function() {
 
       // If we have a name, we're already loaded
@@ -125,7 +127,7 @@
       
       // if (this.get('id')) return;
 
-      // We want to grab the single image endpoint here (requires Auth)
+      
       // var media = this;
       // var url = 'https://api.instagram.com/v1/media/popular?client_id=5ee7e77d7b0b441f9cd307a5f30c92bb&callback=?';
       // $.getJSON(url).then(function (response) {
@@ -159,24 +161,15 @@
     needs: ['media'],
     disableComments: function() {
       this.get('controllers.media').setProperties({showComments: false});
+      $('.photo-feed .span4').trigger('refreshWookmark');
     },
     enableComments: function() {
       this.get('controllers.media').setProperties({showComments: true});
+      $('.photo-feed .span4').trigger('refreshWookmark');
     },
     authorizeInstagram: function() {
       EmberInstagram.oauth = Ember.OAuth2.create({providerId: 'instagram'});
       EmberInstagram.oauth.authorize();
-    },
-    selfFeed: function() {
-      console.log('self');
-      this.set('controllers.media.id', 'self');
-      console.log(this.get('controllers.media.id'));
-      
-    },
-    popularFeed: function() {
-      console.log('popular');
-      this.set('controllers.media.id', 'popular');
-      console.log(this.get('controllers.media.id'));
     }
   });
 
@@ -185,6 +178,16 @@
   // Views
 
   EmberInstagram.MediaView = Ember.View.extend({
+    didInsertElement: function() {
+      setTimeout(function() {
+        this.$('.photo-feed').imagesLoaded( function( $images, $proper, $broken ) {
+          $('.photo-feed .span4').wookmark({
+            container: $('.photo-feed'),
+            offset: 25
+          });
+        });
+      }, 1000);
+    },
     click: function(event) {
 
       // Transition zoom image on click
@@ -217,11 +220,10 @@
     classNameBindings: ['isEnabled:enabled:disabled'],
     didInsertElement: function() {
       var self=this;
-      // console.log('loaded');
+
+
       this.$().imagesLoaded( function( $images, $proper, $broken ) {
-        // console.log( $images.length + ' images total have been loaded' );
-        // console.log( $proper.length + ' properly loaded images' );
-        // console.log( $broken.length + ' broken images' );
+
 
         self.set('isEnabled', true);
         // console.log(self.isEnabled);
@@ -269,18 +271,7 @@
         this.transitionToRoute('link', posts.objectAt(index));
       }
     },
-    // nextPostThumb: function() {
-    //   console.log('next thumb media index', this.get('content.mediaIndex'));
-      
-    //   var index = this.get('content.mediaIndex') + 1;
 
-    //   return EmberInstagram.Media.find('popular').get('links').objectAt(index).get('images.thumbnail.url');
-    // }.property('nextPostThumb'),
-    // previousPostThumb: function() {
-    //   var index = this.get('content.mediaIndex') -1;
-
-    //   return EmberInstagram.Media.find('popular').get('links').objectAt(index).get('images.thumbnail.url');
-    // }.property('previousPostThumb')
   });
 
   EmberInstagram.LinkRoute = Ember.Route.extend({
@@ -326,7 +317,7 @@
 
   EmberInstagram.IndexRoute = Ember.Route.extend({
     redirect: function() {
-      this.transitionTo('media', EmberInstagram.Media.find(photoFeeds[0]));
+      this.transitionTo('media', EmberInstagram.Media.find(photoFeeds[1]));
     }
   });
 
