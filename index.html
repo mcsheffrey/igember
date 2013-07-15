@@ -82,7 +82,7 @@
 
                   {{#if link.users_in_photo}}
                     {{#each userphoto in link.users_in_photo}}
-                      <div class="user-photo" style="top:{{multiply userphoto.position.x}}%;left:{{multiply userphoto.position.y}}%;">{{userphoto.user.username}}</div>
+                      <div class="user-photo" style="top:{{unbound link.userPositionX}}%;left:{{unbound link.userPositionY}}%;">{{userphoto.user.username}}</div>
                     {{/each}}
                   {{/if}}
                   {{#if link.videos}}
