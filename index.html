@@ -2,8 +2,7 @@
 <html>
 <head>
 <meta charset=utf-8 />
-<title>Ember Reddit Example</title>
-  <link rel="stylesheet" href="css/bootstrap.min.css">
+<title>Ember.js Instagram demo</title>
   <link rel="stylesheet" href="css/emberinstagram.css">
 </head>
 <body>
@@ -80,6 +79,16 @@
               {{#linkTo 'link' link}}
                 <div class="image-container">
                   <img {{bindAttr src="link.images.low_resolution.url" alt="link.caption.text"}}>
+
+                  {{#if link.users_in_photo}}
+                    {{#each userphoto in link.users_in_photo}}
+                      <div class="user-photo" style="top:{{multiply userphoto.position.x}}%;left:{{multiply userphoto.position.y}}%;">{{userphoto.user.username}}</div>
+                    {{/each}}
+                  {{/if}}
+                  {{#if link.videos}}
+                    <div class="video-icon">Play Video</div>
+                  {{/if}}
+   
                 </div>
               {{/linkTo}}
 
@@ -136,7 +145,12 @@
   {{log content}}
     <div class="photo-modal clearfix">
       <div class="modal-image">
-        <img height="298" width="298" {{bindAttr src="images.standard_resolution.url" alt="caption.text"}}>
+        {{#if videos}}
+          <video data-setup='{ "controls": true, "autoplay": false, "preload": "auto" }' class="video-js vjs-default-skin" {{bindAttr poster="images.standard_resolution.url" src="videos.standard_resolution.url"}} type="video/mp4" controls preload="auto" ></video>
+        {{else}}
+          <img height="298" width="298" {{bindAttr src="images.standard_resolution.url" alt="caption.text"}}>
+        {{/if}}
+        
       </div>
       <div class="media-info">
 
@@ -210,6 +224,10 @@
   <script src="js/libs/jquery.wookmark.min.js"></script>
   <script src="js/libs/jquery.imagesloaded.min.js"></script>
   <script src="js/libs/moment.min.js"></script>
+  <script src="js/libs/video.js"></script>
+  <script>
+    videojs.options.flash.swf = "js/libs/video-js.swf"
+  </script>
   <script src="js/app.js"></script>
 
 </body>
