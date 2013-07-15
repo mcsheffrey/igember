@@ -1,3 +1,10 @@
+/* ============================================================
+ * Ember.js Instagram Demo
+ * http://github.com/mcsheffrey/igember
+ * @mcsheffrey
+ * ============================================================ */
+
+
 // Create our Application
 (function () {
 
@@ -106,6 +113,26 @@
   // Single Image model
   EmberInstagram.Link = Ember.Object.extend({
 
+    userPositionX: function() {
+      if (this.get('users_in_photo')[0]) {
+        var positionX = this.get('users_in_photo')[0].position.x * 100;
+        return positionX;
+      };
+      
+      return false;
+      
+    }.property('userPositionX'),
+
+    userPositionY: function() {
+      if (this.get('users_in_photo')[0]) {
+        var positionY = this.get('users_in_photo')[0].position.y * 100;
+        return positionY;
+      };
+      
+      return false;
+      
+    }.property('userPositionY'),
+
     // Computed properties, just the Google Maps API Url for now, I'm guess there will be more here eventually
     mapUrl: function() {
       var latitude = this.get('location.latitude');
@@ -186,7 +213,12 @@
             offset: 25
           });
         });
-      }, 1000);
+      }, 2000);
+
+      $('.user-photo').each(function(index) {
+        $(this).css('margin-left', $(this).width()/-2);
+      });
+
     },
     click: function(event) {
 
@@ -220,15 +252,18 @@
     classNameBindings: ['isEnabled:enabled:disabled'],
     didInsertElement: function() {
       var self=this;
+      $('body').addClass('open-modal');
 
-
-      this.$().imagesLoaded( function( $images, $proper, $broken ) {
-
+      // this.$().imagesLoaded( function( $images, $proper, $broken ) {
 
         self.set('isEnabled', true);
         // console.log(self.isEnabled);
 
-      });
+        // videojs("example_video_1", {}, function(){
+        //   // Player (this) is initialized and ready.
+        // });
+
+      // });
 
       $('body').on('keydown', function(event) {
         if(event.keyCode == 37) { // left
@@ -244,6 +279,7 @@
     willDestroyElement: function() {
       console.log('DESTROYED');
       $('body').off('keydown');
+      $('body').removeClass('open-modal');
     }
 
   });
@@ -257,6 +293,7 @@
 
   EmberInstagram.LinkController = Ember.ObjectController.extend({
     needs: ['media'],
+    
     nextPost: function() {
       this.advancePost(1);
     },
@@ -337,5 +374,11 @@
       return options.fn(this);
     return options.inverse(this);
   });
+
+   Ember.Handlebars.registerHelper('multiply', function(context, multiplier) {
+      console.log(context);
+      
+      return context * 100;
+    });
 
 })();

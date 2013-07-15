@@ -1,17 +1,27 @@
+/* ============================================================
+ * Ember.js Instagram Demo
+ * http://github.com/mcsheffrey/igember
+ * @mcsheffrey
+ * ============================================================ */
+
+@import "compass/css3",
+		'bootstrap.min.css',
+		'video-js.min.css';
+
 @font-face {
-	font-family: 'icomoon';
-	src:url('../fonts/icomoon.eot');
-	src:url('../fonts/icomoon.eot?#iefix') format('embedded-opentype'),
-		url('../fonts/icomoon.svg#icomoon') format('svg'),
-		url('../fonts/icomoon.ttf') format('truetype');
-		
+	font-family: 'IG';
+	src:url('../fonts/IG.eot');
+	src:url('../fonts/IG.eot?#iefix') format('embedded-opentype'),
+		url('../fonts/IG.svg#IG') format('svg'),
+		url('../fonts/IG.woff') format('woff'),
+		url('../fonts/IG.ttf') format('truetype');
 	font-weight: normal;
 	font-style: normal;
 }
 
 /* Use the following CSS code if you want to use data attributes for inserting your icons */
 [data-icon]:before {
-	font-family: 'icomoon';
+	font-family: 'IG';
 	content: attr(data-icon);
 	speak: none;
 	font-weight: normal;
@@ -27,8 +37,8 @@ Instead of a list of all class selectors,
 you can use the generic selector below, but it's slower:
 [class*="icon-"] {
 */
-.icon-explore, .icon-feed, .icon-home, .icon-time, .icon-comment, .icon-Instagram {
-	font-family: 'icomoon';
+.icon-feeds, .icon-heart, .icon-play-icon, .icon-Instagram, .icon-explore, .icon-home, .icon-time, .icon-comment {
+	font-family: 'IG';
 	speak: none;
 	font-style: normal;
 	font-weight: normal;
@@ -37,11 +47,20 @@ you can use the generic selector below, but it's slower:
 	line-height: 1;
 	-webkit-font-smoothing: antialiased;
 }
+.icon-feeds:before {
+	content: "\62";
+}
+.icon-heart:before {
+	content: "\68";
+}
+.icon-play-icon:before {
+	content: "\67";
+}
+.icon-Instagram:before {
+	content: "\66";
+}
 .icon-explore:before {
 	content: "\61";
-}
-.icon-feed:before {
-	content: "\62";
 }
 .icon-home:before {
 	content: "\65";
@@ -52,9 +71,7 @@ you can use the generic selector below, but it's slower:
 .icon-comment:before {
 	content: "\64";
 }
-.icon-Instagram:before {
-	content: "\66";
-}
+
 
 .icon-home {
 	font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; 
@@ -81,7 +98,7 @@ you can use the generic selector below, but it's slower:
 .navbar .self:before,
 .icon-home:before {
 	color: #1a4564;
-	font-family: 'icomoon';
+	font-family: 'IG';
 	speak: none;
 	font-style: normal;
 	font-weight: normal;
@@ -117,7 +134,7 @@ you can use the generic selector below, but it's slower:
 .navbar .popular.active:after,
 .navbar .self.active:after {
 	color: #1a4564;
-	font-family: 'icomoon';
+	font-family: 'IG';
 	speak: none;
 	font-style: normal;
 	font-weight: normal;
@@ -152,7 +169,7 @@ you can use the generic selector below, but it's slower:
 
 .navbar .self:before {
 	color: #1a4564;
-	font-family: 'icomoon';
+	font-family: 'IG';
 	speak: none;
 	font-style: normal;
 	font-weight: normal;
@@ -206,7 +223,7 @@ you can use the generic selector below, but it's slower:
 
 .nav-login:before {
 	content: "\66";
-	font-family: 'icomoon';
+	font-family: 'IG';
 	font-size: 20px;
 	-webkit-font-smoothing: antialiased;
 	position: absolute;
@@ -222,6 +239,10 @@ body {
 	padding-top: 50px;
 	-webkit-font-smoothing: antialiased;
       text-rendering: optimizeLegibility;
+
+    &.open-modal {
+    	overflow: hidden;
+    }
 }
 
 .navbar-inner {
@@ -321,6 +342,130 @@ vertical-align: top;
 	margin-bottom: 20px;
 }
 
+.image-container {
+	position: relative;
+}
+
+.video-icon {
+	display: inline-block;
+	height: 20px;
+	width: 20px;
+	top: 10px;
+	right: 10px;
+	opacity: .8;
+	position: absolute;
+	text-indent: -9999px;
+
+	&::before {
+		color: #fff;
+		content: "\67";
+		font-family: 'IG';
+		font-size: 20px;
+		position: absolute;
+		text-indent: 0;
+		top: 0;
+		left: 0;
+		z-index: 2;
+	}
+
+	&::after {
+		color: transparent;
+		content: "\67";
+		font-family: 'IG';
+		font-size: 20px;
+		position: absolute;
+		text-indent: 0;
+		text-shadow: 0 0 2px rgba(0,0,0,.7);
+		top: 0;
+		left: 0;
+		z-index: 1;
+	}
+
+	&:hover {
+		opacity: 1;
+	}
+}
+
+.image-container .video-icon {
+	opacity: 1;
+}
+
+.video-icon:hover {
+	text-decoration: none;
+}
+
+@-moz-keyframes bounce {
+        0%{ -moz-transform:scale(0); opacity:0;}
+        50%{ -moz-transform:scale(1.3); opacity:0.4; }
+        75%{ -moz-transform:scale(0.9); opacity:1;}
+        100%{ -moz-transform:scale(1); opacity:1;}
+}
+
+@-webkit-keyframes bounce {
+        0%{ -webkit-transform:scale(0); opacity:0;}
+        50%{ -webkit-transform:scale(1.3); opacity:0.4;}
+        75%{ -webkit-transform:scale(0.9); opacity:1;}
+        100%{ -webkit-transform:scale(1); opacity:1;}
+}
+
+.user-photo {
+	background: rgba(0,0,0,.8);
+	border: 1px solid #020202;
+	border-bottom: 0;
+	border-radius: 3px;
+	-webkit-box-shadow: inset 0px 1px 1px rgba(255, 255, 255, .4), 0 0 5px rgba(0, 0, 0, .4);
+			box-shadow: inset 0px 1px 1px rgba(255, 255, 255, .4), 0 0 5px rgba(0, 0, 0, .4);
+	color: #fff;
+	font-weight: 600;
+	margin-left: -60px;
+	position: absolute;
+	padding: 5px 10px;
+	text-shadow: 0px -1px 1px rgba(0, 0, 0, .5);
+	// opacity: 0;
+
+	&::before,
+	&::after {
+		background: rgba(0,0,0,.8);
+		bottom: -6px;
+		border: 1px solid #020202;
+		border-radius: 2px;
+		content: '';
+		display: block;
+		height: 10px;
+		margin-left: -4px;
+		position: absolute;
+		left: 50%;
+		-webkit-transform: rotate(135deg);
+		-webkit-background-clip: content;
+		-webkit-mask-image: -webkit-gradient(linear, right top, left bottom, from(#000000), color-stop(0.5,#000000), color-stop(0.5, transparent), to(transparent));
+		width: 10px;
+	}
+
+	&::after {
+		background: none;
+		-webkit-box-shadow: 0 0 5px rgba(0, 0, 0, .4);
+				box-shadow: 0 0 5px rgba(0, 0, 0, .4);
+		z-index: -1;
+	}
+
+	&:hover {
+		background: rgba(26,103,166,.8);
+		border-color: #0d3658;
+
+		&::before {
+			background: rgba(26,103,166,.8);
+			-webkit-box-shadow: 0 0 0;
+					box-shadow: 0 0 0;
+		}
+	}
+}
+
+.image-container:hover .user-photo {
+	 -moz-animation:bounce .30s linear;  
+    -webkit-animation:bounce .30s linear; 
+    -webkit-animation-fill-mode: forwards;
+}
+
 .profile {
 	width: 28px;
 }
@@ -354,7 +499,7 @@ vertical-align: top;
 
 .caption time:before {
 	content: "\63";
-	font-family: 'icomoon';
+	font-family: 'IG';
 	margin-right: 5px;
 	position: absolute;
 	left: 9px;
@@ -372,8 +517,8 @@ vertical-align: top;
 
 .likes:before {
 	color: #c8c8c8;
-	content: "\64";
-	font-family: 'icomoon';
+	content: "\68";
+	font-family: 'IG';
 	position: absolute;
 	left: 10px;
 	font-size: 10px
@@ -388,7 +533,7 @@ vertical-align: top;
 	&:before {
 		color: #c8c8c8;
 		content: "\64";
-		font-family: 'icomoon';
+		font-family: 'IG';
 		position: absolute;
 		left: 10px;
 		font-size: 10px
@@ -415,12 +560,6 @@ vertical-align: top;
 
 .link-view {
 	height: 0;
-	overflow: hidden;
-	opacity: 0;
-	-webkit-transition: opacity 0.1s linear;
-  -moz-transition: opacity 0.1s linear;
-  -o-transition: opacity 0.1s linear;
-  transition: opacity 0.1s linear;
 	position: fixed;
 	margin: -306px 0 0 -412px;
 	top: 50%;
@@ -452,6 +591,8 @@ vertical-align: top;
 .modal-image {
 	display: inline-block;
 	float: left;
+	height: 500px;
+	width: 500px;
 }
 
 .modal-image img {
@@ -459,7 +600,6 @@ vertical-align: top;
 }
 
 .enabled.link-view {
-	opacity: 1;
 	height: auto;
 }
 
@@ -476,6 +616,66 @@ vertical-align: top;
 	right: 0;
 	text-indent: -9999px;
 	z-index: 199;
+	height: 0;
+	overflow: hidden;
+	opacity: 0;
+	-webkit-transition: opacity 0.1s linear;
+  -moz-transition: opacity 0.1s linear;
+  -o-transition: opacity 0.1s linear;
+  transition: opacity 0.1s linear;
+}
+
+.video-js {
+	height: 100% !important;
+	width: 100% !important;
+}
+
+.vjs-default-skin .vjs-control-bar {
+	display: none !important;
+}
+
+.vjs-default-skin .vjs-big-play-button {
+	@include transition(opacity 0.3s ease-in);
+	cursor: pointer;
+	display: inline-block;
+	height: 100px;
+	width: 100px;
+	top: 243px;
+	left: 200px;
+	opacity: .8;
+	position: absolute;
+	text-indent: -9999px;
+	outline: 0;
+
+	&::before {
+		color: #fff;
+		content: "\67";
+		font-family: 'IG';
+		font-size: 100px;
+		position: absolute;
+		text-indent: 0;
+		z-index: 2;
+	}
+
+	&::after {
+		color: transparent;
+		content: "\67";
+		font-family: 'IG';
+		font-size: 100px;
+		position: absolute;
+		text-indent: 0;
+		text-shadow: 0 0 2px rgba(0,0,0,.7);
+		z-index: 1;
+	}
+
+	&:hover {
+		opacity: 1;
+	}
+}
+
+.enabled .close-modal {
+	height: auto;
+	opacity: 1;
 }
 
 .place-map {
