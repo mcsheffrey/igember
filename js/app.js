@@ -15,8 +15,8 @@
       authBaseUri: 'https://instagram.com/oauth/authorize/',
       redirectUri: 'http://localhost:8000/callback.html',
       scope: 'basic comments relationships likes'
-    } 
-  }
+    }
+  };
 
   Ember.LOG_BINDINGS = true;
 
@@ -25,7 +25,12 @@
     'self',
     'popular',
     'recent'
-  ];
+  ],
+  API_GLOBALS = {
+    AUTH_TOKEN: JSON.parse(localStorage.getItem('token-instagram')).access_token,
+    API_ENDPOINTS: 'https://api.instagram.com/v1/',
+    ERROR_MESSAGES: "Fail."
+  };
 
   window.EmberInstagram = Ember.Application.create({
     LOG_TRANSITIONS: true
@@ -294,6 +299,44 @@
   EmberInstagram.LinkController = Ember.ObjectController.extend({
     needs: ['media'],
     
+    _postAPI: function(params) {
+      console.log(params);
+      
+      var xhr = $.ajax({
+        url: 'https://api.instagram.com/v1/media/'+params.mediaId+'/likes?access_token='+ API_GLOBALS.AUTH_TOKEN,
+        type: 'POST'
+      });
+      xhr.success(function (data) {
+        console.log(data);
+      });
+
+      xhr.fail(function () {
+        console.log('failed');
+        
+      });
+      return xhr;
+    },
+    postComment: function() {
+      console.log(API_GLOBALS.AUTH_TOKEN);
+      console.log(this.get('model.id'));
+      
+      var someObject = {
+        mediaId: this.get('model.id'),
+        mediaEndpoint: '/comments'
+      }
+      var xhr = this._postAPI(someObject);
+      
+    },
+    postLike: function() {
+
+      var someObject = {
+        mediaId: this.get('model.id'),
+        mediaEndpoint: '/likes'
+      }
+      var xhr = this._postAPI(someObject);
+
+    },
+
     nextPost: function() {
       this.advancePost(1);
     },
@@ -307,7 +350,7 @@
       if (index >= 0 && index <= posts.get('length')-1) {
         this.transitionToRoute('link', posts.objectAt(index));
       }
-    },
+    }
 
   });
 
