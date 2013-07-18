@@ -15,8 +15,8 @@
       authBaseUri: 'https://instagram.com/oauth/authorize/',
       redirectUri: 'http://mcsheffrey.github.io/igember/callback.html',
       scope: 'basic comments relationships likes'
-    } 
-  }
+    }
+  };
 
   Ember.LOG_BINDINGS = true;
 
@@ -25,7 +25,12 @@
     'self',
     'popular',
     'recent'
-  ];
+  ],
+  API_GLOBALS = {
+    AUTH_TOKEN: (JSON.parse(localStorage.getItem('token-instagram'))) ? JSON.parse(localStorage.getItem('token-instagram')).access_token : false,
+    API_ENDPOINTS: 'https://api.instagram.com/v1/',
+    ERROR_MESSAGES: "Fail."
+  };
 
   window.EmberInstagram = Ember.Application.create({
     LOG_TRANSITIONS: true
@@ -94,9 +99,14 @@
 
         media.setProperties({links: links, loaded: true});
       });
+    },
+    findNext: function(id) {
+      console.log('something');
+      
+    },
+    findPrev: function(id) {
+
     }
-
-
   });
 
   EmberInstagram.Media.reopenClass({
@@ -105,6 +115,7 @@
     find: function(id) {
       if (!this.store[id]) {
         this.store[id] = EmberInstagram.Media.create({id: id});
+        console.log(this.store[id]);
       }
       return this.store[id];
     }
@@ -113,25 +124,60 @@
   // Single Image model
   EmberInstagram.Link = Ember.Object.extend({
 
-    userPositionX: function() {
-      if (this.get('users_in_photo')[0]) {
-        var positionX = this.get('users_in_photo')[0].position.x * 100;
-        return positionX;
-      };
-      
-      return false;
-      
-    }.property('userPositionX'),
+    photosOfYou: function() {
+      var userInPhoto = {},
+          photoUsers = [];
 
-    userPositionY: function() {
       if (this.get('users_in_photo')[0]) {
-        var positionY = this.get('users_in_photo')[0].position.y * 100;
-        return positionY;
+        console.log(this.get('users_in_photo').length);
+        
+        for (var i = 0; i < this.get('users_in_photo').length; i++) {
+          console.log(this.get('users_in_photo')[i]);
+          userInPhoto['position'];
+          console.log(userInPhoto);
+          
+          // userInPhoto['position']['x'] = this.get('users_in_photo')[0].position.x * 100;
+          // userInPhoto.position['y'] = this.get('users_in_photo')[0].position.y * 100;
+          // userInPhoto['user'];
+          // userInPhoto.user.username = this.get('users_in_photo')[0].user.username;
+          photoUsers.push({
+            position: {
+              x: this.get('users_in_photo')[i].position.x * 100,
+              y: this.get('users_in_photo')[i].position.y * 100
+            },
+            user: {
+              username: this.get('users_in_photo')[i].user.username
+            }
+          });
+        };
+        console.log('photoUsers',photoUsers);
+        
+        return photoUsers;
       };
+
+      // return false;
       
-      return false;
+    }.property('photosOfYou'),
+
+    // userPositionX: function() {
+    //   if (this.get('users_in_photo')[0]) {
+    //     var positionX = this.get('users_in_photo')[0].position.x * 100;
+    //     return positionX;
+    //   };
       
-    }.property('userPositionY'),
+    //   return false;
+      
+    // }.property('userPositionX'),
+
+    // userPositionY: function() {
+    //   if (this.get('users_in_photo')[0]) {
+    //     var positionY = this.get('users_in_photo')[0].position.y * 100;
+    //     return positionY;
+    //   };
+      
+    //   return false;
+      
+    // }.property('userPositionY'),
 
     // Computed properties, just the Google Maps API Url for now, I'm guess there will be more here eventually
     mapUrl: function() {
@@ -172,6 +218,8 @@
     find: function(id) {
       if (!this.store[id]) {
         this.store[id] = EmberInstagram.Link.create({id: id});
+
+        
       }
       return this.store[id];
     }
@@ -188,11 +236,21 @@
     needs: ['media'],
     disableComments: function() {
       this.get('controllers.media').setProperties({showComments: false});
-      $('.photo-feed .span4').trigger('refreshWookmark');
+      setTimeout(function() {
+        $('.photo-feed .span4').trigger('refreshWookmark');
+      }, 500);
     },
     enableComments: function() {
       this.get('controllers.media').setProperties({showComments: true});
-      $('.photo-feed .span4').trigger('refreshWookmark');
+      setTimeout(function() {
+        $('.photo-feed').trigger('refreshWookmark');
+      }, 500);
+    },
+    sortRecent: function() {
+      alert('TODO: Sort by recent.')
+    },
+    sortPopular: function() {
+      alert('TODO: Sort by popular.')
     },
     authorizeInstagram: function() {
       EmberInstagram.oauth = Ember.OAuth2.create({providerId: 'instagram'});
@@ -200,7 +258,17 @@
     }
   });
 
-  EmberInstagram.MediaController = Ember.ObjectController.extend();
+  EmberInstagram.MediaController = Ember.ObjectController.extend({
+    content: null,
+    findNext: function(id) {
+      console.log('next', id);
+      console.log(this);
+      this.get('content').findNext(id);
+    },
+    findPrev: function(id) {
+
+    }
+  });
 
   // Views
 
@@ -209,15 +277,17 @@
       setTimeout(function() {
         this.$('.photo-feed').imagesLoaded( function( $images, $proper, $broken ) {
           $('.photo-feed .span4').wookmark({
+            align: 'left',
             container: $('.photo-feed'),
-            offset: 25
+            offset: 19
           });
+        });
+        $('.user-photo').each(function(index) {
+          $(this).css('margin-left', $(this).outerWidth()/-2);
         });
       }, 2000);
 
-      $('.user-photo').each(function(index) {
-        $(this).css('margin-left', $(this).width()/-2);
-      });
+      
 
     },
     click: function(event) {
@@ -252,18 +322,23 @@
     classNameBindings: ['isEnabled:enabled:disabled'],
     didInsertElement: function() {
       var self=this;
-      $('body').addClass('open-modal');
+      
 
-      // this.$().imagesLoaded( function( $images, $proper, $broken ) {
+      this.$().imagesLoaded( function( $images, $proper, $broken ) {
+
+        $('body').addClass('open-modal');
 
         self.set('isEnabled', true);
+
+        
+        
         // console.log(self.isEnabled);
 
         // videojs("example_video_1", {}, function(){
         //   // Player (this) is initialized and ready.
         // });
 
-      // });
+      });
 
       $('body').on('keydown', function(event) {
         if(event.keyCode == 37) { // left
@@ -293,8 +368,53 @@
 
   EmberInstagram.LinkController = Ember.ObjectController.extend({
     needs: ['media'],
-    
+
+    _postAPI: function(params) {
+      console.log(params);
+      
+      var xhr = $.ajax({
+        url: 'https://api.instagram.com/v1/media/'+params.mediaId+'/likes?access_token='+ API_GLOBALS.AUTH_TOKEN,
+        type: 'POST'
+      });
+      xhr.success(function (data) {
+        console.log(data);
+      });
+
+      xhr.fail(function () {
+        console.log('failed');
+        
+      });
+      return xhr;
+    },
+    postComment: function() {
+      console.log(API_GLOBALS.AUTH_TOKEN);
+      console.log(this.get('model.id'));
+      
+      var someObject = {
+        mediaId: this.get('model.id'),
+        mediaEndpoint: '/comments'
+      }
+      var xhr = this._postAPI(someObject);
+      
+    },
+    postLike: function() {
+
+      var someObject = {
+        mediaId: this.get('model.id'),
+        mediaEndpoint: '/likes'
+      }
+      var xhr = this._postAPI(someObject);
+
+    },
+
+    // content: null,
+    // init: function() {
+    //   console.log(this.get('content'));
+    //   this._super();
+    // },
+
     nextPost: function() {
+      // this.get('controllers.media').findNext(this.get('content.id'));
       this.advancePost(1);
     },
     previousPost: function() {
@@ -307,7 +427,7 @@
       if (index >= 0 && index <= posts.get('length')-1) {
         this.transitionToRoute('link', posts.objectAt(index));
       }
-    },
+    }
 
   });
 
@@ -321,7 +441,8 @@
     },
 
     setupController: function(controller, model) {
-      model.loadDetails();
+      // model.loadDetails();
+      controller.set('content', model);
     },
   });
 
@@ -338,6 +459,9 @@
 
     setupController: function(controller, model) {
       model.loadLinks();
+      console.log(controller, model);
+      
+      controller.set('content', model);
     },
   });
 
